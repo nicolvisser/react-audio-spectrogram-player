@@ -24,8 +24,8 @@ function SpectrogramGraphics(props: SpectrogramGraphicsProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const [dataURL, setDataURL] = useState<string>("")
 
-    const startTime = 0.25 // seconds
-    const endTime = 0.75 // seconds
+    const startTime = 0.00 // seconds
+    const endTime = 1.00 // seconds
 
     useEffect(() => {
         // Loads the spectrogram (sxx) onto a canvas when either the spectrogram or canvas changes

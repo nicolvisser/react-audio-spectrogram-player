@@ -3,11 +3,13 @@ import { createContext, useState, useContext, SetStateAction, Dispatch } from 'r
 export type PlaybackContextType = {
     duration: number
     currentTime: number
+    playbackRate: number
     setDuration: Dispatch<SetStateAction<number>>
     setCurrentTime: Dispatch<SetStateAction<number>>
+    setPlaybackRate: Dispatch<SetStateAction<number>>
 };
 
-export const PlaybackContext = createContext<PlaybackContextType>({ duration: 1, currentTime: 1, setDuration: () => { }, setCurrentTime: () => { } });
+export const PlaybackContext = createContext<PlaybackContextType>({ duration: 1, currentTime: 0, playbackRate: 1.0, setDuration: () => { }, setCurrentTime: () => { }, setPlaybackRate: () => { } });
 
 
 export function usePlayback() {
@@ -22,8 +24,9 @@ function PlaybackProvider(props: PlaybackProviderProps) {
     const { children } = props
     const [duration, setDuration] = useState(1)
     const [currentTime, setCurrentTime] = useState(0)
+    const [playbackRate, setPlaybackRate] = useState(1.0)
     return (
-        <PlaybackContext.Provider value={{ duration, currentTime, setDuration, setCurrentTime }}>
+        <PlaybackContext.Provider value={{ duration, currentTime, playbackRate, setDuration, setCurrentTime, setPlaybackRate }}>
             {children}
         </PlaybackContext.Provider >
     )
