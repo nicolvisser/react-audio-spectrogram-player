@@ -16,26 +16,45 @@ import src_dog from "./assets/dog.wav";
 import src_down from "./assets/down.wav";
 import src_eight from "./assets/eight.wav";
 
-function App() {
+const data = [
+  {
+    sxx: sxx_backward,
+    src: src_backward
+  },
+  {
+    sxx: sxx_bed,
+    src: src_bed
+  },
+  {
+    sxx: sxx_bird,
+    src: src_bird
+  },
+  {
+    sxx: sxx_cat,
+    src: src_cat
+  },
+  {
+    sxx: sxx_dog,
+    src: src_dog
+  },
+  {
+    sxx: sxx_down,
+    src: src_down
+  },
+  {
+    sxx: sxx_eight,
+    src: src_eight
+  }
+]
 
-  
+function App() {
 
   return (
     <div>
-      <SpectrogramSurfer sxx={sxx_backward} src={src_backward}/>
-      <br/>
-      <SpectrogramSurfer sxx={sxx_bed} src={src_bed}/>
-      <br/>
-      <SpectrogramSurfer sxx={sxx_bird} src={src_bird}/>
-      <br/>
-      <SpectrogramSurfer sxx={sxx_cat} src={src_cat}/>
-      <br/>
-      <SpectrogramSurfer sxx={sxx_dog} src={src_dog}/>
-      <br/>
-      <SpectrogramSurfer sxx={sxx_down} src={src_down}/>
-      <br/>
-      <SpectrogramSurfer sxx={sxx_eight} src={src_eight}/>
-    </div>
+      {data.map(({ sxx, src }) => (
+        <SpectrogramSurfer sxx={sxx} src={src} width={400} specHeight={80} navHeight={30} />
+      ))}
+    </div >
   )
 }
 

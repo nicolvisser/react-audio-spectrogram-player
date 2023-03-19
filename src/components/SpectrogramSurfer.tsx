@@ -3,31 +3,25 @@ import { max, min } from "d3";
 import colormap from 'colormap';
 import SpectrogramCanvas from './SpectrogramCanvas';
 
-
-const colors = colormap({
-    colormap: 'viridis',
-    nshades: 256,
-    format: 'rgba',
-    alpha: 255,
-});
-
 interface SpectrogramSurferProps {
-    sxx: number[][];
+    sxx: number[][]
     src: string
+    width: number
+    specHeight: number
+    navHeight: number
 }
 
 function SpectrogramSurfer(props: SpectrogramSurferProps) {
-    const { sxx, src } = props
+    const { sxx, src, width, specHeight, navHeight } = props
     const audioRef = useRef<HTMLAudioElement>(null)
 
     return (
-        <>
-            <SpectrogramCanvas sxx={sxx} />
-            <br />
-            <audio ref={audioRef} controls>
+        <div style={{ width: width }}>
+            <SpectrogramCanvas sxx={sxx} width={width} specHeight={specHeight} navHeight={navHeight} />
+            <audio ref={audioRef} controls style={{ width: width }}>
                 <source src={src} />
             </audio>
-        </>
+        </div >
     )
 }
 

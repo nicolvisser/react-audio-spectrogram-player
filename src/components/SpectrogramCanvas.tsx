@@ -1,7 +1,6 @@
-import { useRef, useEffect, forwardRef } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { max, min } from "d3";
 import colormap from 'colormap';
-
 
 const colors = colormap({
     colormap: 'viridis',
@@ -11,14 +10,18 @@ const colors = colormap({
 });
 
 interface SpectrogramCanvasProps {
-    sxx: number[][];
+    sxx: number[][]
+    width: number
+    specHeight: number
+    navHeight: number
 }
 
 function SpectrogramCanvas(props: SpectrogramCanvasProps) {
-    const sxx = props.sxx
+    const { sxx, width, specHeight, navHeight } = props
     const numRows = sxx.length
     const numCols = sxx[0].length
     const canvasRef = useRef<HTMLCanvasElement>(null)
+    const [dataURL, setDataURL] = useState<string>("")
 
     useEffect(() => {
         if (canvasRef.current) {
@@ -40,13 +43,34 @@ function SpectrogramCanvas(props: SpectrogramCanvasProps) {
                         }
                     }
                     ctx.putImageData(imageData, 0, 0);
+
+                    setDataURL(canvasRef.current.toDataURL())
                 }
             }
         }
     }, [canvasRef]);
 
+    const svgContent = <image
+        width={100}
+        height={100}
+        x={0}
+        y={0}
+        href={dataURL}
+        preserveAspectRatio="none"
+        pointerEvents="none"
+    />
+
     return (
-        <canvas ref={canvasRef} height={numRows} width={numCols} />
+        <>
+            <canvas hidden ref={canvasRef} height={numRows} width={numCols} />
+            <svg width={width} height={specHeight} viewBox={`${0},${0},${100},${100}`} preserveAspectRatio="none" >
+                {svgContent}
+            </svg>
+            <br />
+            <svg width={width} height={navHeight} viewBox={`${0},${0},${100},${100}`} preserveAspectRatio="none" >
+                {svgContent}
+            </svg>
+        </>
     )
 }
 
