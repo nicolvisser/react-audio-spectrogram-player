@@ -18,8 +18,6 @@ interface SpectrogramCanvasProps {
 
 function SpectrogramCanvas(props: SpectrogramCanvasProps) {
     const { sxx, width, specHeight, navHeight } = props
-    const numRows = sxx.length
-    const numCols = sxx[0].length
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const [dataURL, setDataURL] = useState<string>("")
 
@@ -27,15 +25,14 @@ function SpectrogramCanvas(props: SpectrogramCanvasProps) {
         if (canvasRef.current) {
             const ctx = canvasRef.current.getContext('2d')
             if (ctx) {
-
                 const smax = max(sxx, (d) => max(d));
                 const smin = min(sxx, (d) => min(d));
                 if (typeof smax !== 'undefined' && typeof smin !== 'undefined') {
-                    let imageData = new ImageData(numCols, numRows);
-                    for (let i = numRows - 1; i >= 0; i--) {
-                        for (let j = 0; j < numCols; j++) {
+                    let imageData = new ImageData(sxx[0].length, sxx.length);
+                    for (let i = sxx.length - 1; i >= 0; i--) {
+                        for (let j = 0; j < sxx[0].length; j++) {
                             const num = Math.floor(255 * (sxx[i][j] - smin) / (smax - smin));
-                            const redIndex = ((numRows - i) * numCols + j) * 4;
+                            const redIndex = ((sxx.length - i) * sxx[0].length + j) * 4;
                             imageData.data[redIndex] = colors[num][0];
                             imageData.data[redIndex + 1] = colors[num][1];
                             imageData.data[redIndex + 2] = colors[num][2];
@@ -43,7 +40,6 @@ function SpectrogramCanvas(props: SpectrogramCanvasProps) {
                         }
                     }
                     ctx.putImageData(imageData, 0, 0);
-
                     setDataURL(canvasRef.current.toDataURL())
                 }
             }
@@ -62,7 +58,7 @@ function SpectrogramCanvas(props: SpectrogramCanvasProps) {
 
     return (
         <>
-            <canvas hidden ref={canvasRef} height={numRows} width={numCols} />
+            <canvas hidden ref={canvasRef} height={sxx.length} width={sxx[0].length} />
             <svg width={width} height={specHeight} viewBox={`${0},${0},${100},${100}`} preserveAspectRatio="none" >
                 {svgContent}
             </svg>
