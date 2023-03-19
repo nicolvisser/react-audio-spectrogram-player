@@ -31,7 +31,7 @@ function SpectrogramViewer(props: SpectrogramViewerProps) {
     }
 
     return (
-        <svg ref={svgRef} width={width} height={height} viewBox={`${startTime},0,${endTime - startTime},100`} preserveAspectRatio="none" onClick={onClick} >
+        <svg ref={svgRef} width={width} height={height} viewBox={`${startTime},0,${endTime - startTime},100`} cursor="pointer" preserveAspectRatio="none" onClick={onClick} >
             {children}
         </svg>
     )

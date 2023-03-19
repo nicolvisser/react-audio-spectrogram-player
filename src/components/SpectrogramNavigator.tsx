@@ -53,7 +53,7 @@ function SpectrogramNavigator(props: SpectrogramNavigatorProps) {
     }
 
     return (
-        <svg ref={svgRef} width={width} height={height} viewBox={`0,0,${duration},100`} preserveAspectRatio="none" onPointerDown={onPointerDown} onPointerUp={onPointerUp} onPointerMove={onPointerMove} >
+        <svg ref={svgRef} width={width} height={height} viewBox={`0,0,${duration},100`} cursor="zoom-in" preserveAspectRatio="none" onPointerDown={onPointerDown} onPointerUp={onPointerUp} onPointerMove={onPointerMove} >
             {children}
             <rect x={0} width={startTime} y="0" height="100" style={{ fill: 'white', opacity: 0.5 }} />
             <rect x={endTime} width={100 - endTime} y="0" height="100" style={{ fill: 'white', opacity: 0.5 }} />
