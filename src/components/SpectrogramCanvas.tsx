@@ -14,7 +14,7 @@ interface SpectrogramCanvasProps {
     sxx: number[][];
 }
 
-const SpectrogramCanvas = forwardRef(function SpectrogramCanvas(props: SpectrogramCanvasProps, ref) {
+function SpectrogramCanvas(props: SpectrogramCanvasProps) {
     const sxx = props.sxx
     const numRows = sxx.length
     const numCols = sxx[0].length
@@ -48,6 +48,6 @@ const SpectrogramCanvas = forwardRef(function SpectrogramCanvas(props: Spectrogr
     return (
         <canvas ref={canvasRef} height={numRows} width={numCols} />
     )
-})
+}
 
 export default SpectrogramCanvas

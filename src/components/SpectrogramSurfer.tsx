@@ -17,15 +17,13 @@ interface SpectrogramSurferProps {
 }
 
 function SpectrogramSurfer(props: SpectrogramSurferProps) {
-    const sxx = props.sxx
-    const src = props.src
-    const canvasRef = useRef<HTMLCanvasElement>(null)
+    const { sxx, src } = props
     const audioRef = useRef<HTMLAudioElement>(null)
 
     return (
         <>
-            <SpectrogramCanvas ref={canvasRef} sxx={sxx}/>
-            <br/>
+            <SpectrogramCanvas sxx={sxx} />
+            <br />
             <audio ref={audioRef} controls>
                 <source src={src} />
             </audio>
