@@ -1,0 +1,7 @@
+node_modules
+*.log
+dist
+.vit
+stats.html
+.eslintcache
+.DS_Store
