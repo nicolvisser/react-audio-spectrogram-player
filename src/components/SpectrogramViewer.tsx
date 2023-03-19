@@ -1,25 +1,25 @@
 import { useRef } from "react";
 import { usePlayback } from "../context/PlaybackProvider";
+import { useZoom } from "../context/ZoomProvider";
 
 interface SpectrogramViewerProps {
     children: JSX.Element
     width: number
     height: number
-    startTime: number
-    endTime: number
 }
 
 function SpectrogramViewer(props: SpectrogramViewerProps) {
-    const { children, width, height, startTime, endTime } = props
+    const { children, width, height } = props
     const { duration, setCurrentTime } = usePlayback()
     const svgRef = useRef<SVGSVGElement>(null);
+    const { startTime, endTime } = useZoom()
 
     const onClick = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
         const boundingClientRect =
             svgRef.current?.getBoundingClientRect();
         if (boundingClientRect) {
             const { left, right } = boundingClientRect;
-            let newTime = (duration * (e.clientX - left)) / (right - left);
+            let newTime = startTime + (endTime - startTime) * (e.clientX - left) / (right - left);
             if (newTime < 0) {
                 newTime = 0;
             }
