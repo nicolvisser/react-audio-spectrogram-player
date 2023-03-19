@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, forwardRef } from 'react'
 import { max, min } from "d3";
 import colormap from 'colormap';
 
@@ -14,7 +14,7 @@ interface SpectrogramCanvasProps {
     sxx: number[][];
 }
 
-function SpectrogramCanvas(props: SpectrogramCanvasProps) {
+const SpectrogramCanvas = forwardRef(function SpectrogramCanvas(props: SpectrogramCanvasProps, ref) {
     const sxx = props.sxx
     const numRows = sxx.length
     const numCols = sxx[0].length
@@ -24,7 +24,7 @@ function SpectrogramCanvas(props: SpectrogramCanvasProps) {
         if (canvasRef.current) {
             const ctx = canvasRef.current.getContext('2d')
             if (ctx) {
-                
+
                 const smax = max(sxx, (d) => max(d));
                 const smin = min(sxx, (d) => min(d));
                 if (typeof smax !== 'undefined' && typeof smin !== 'undefined') {
@@ -48,6 +48,6 @@ function SpectrogramCanvas(props: SpectrogramCanvasProps) {
     return (
         <canvas ref={canvasRef} height={numRows} width={numCols} />
     )
-}
+})
 
 export default SpectrogramCanvas

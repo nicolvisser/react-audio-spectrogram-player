@@ -23,11 +23,17 @@ function App() {
   return (
     <div>
       <SpectrogramSurfer sxx={sxx_backward} src={src_backward}/>
+      <br/>
       <SpectrogramSurfer sxx={sxx_bed} src={src_bed}/>
+      <br/>
       <SpectrogramSurfer sxx={sxx_bird} src={src_bird}/>
+      <br/>
       <SpectrogramSurfer sxx={sxx_cat} src={src_cat}/>
+      <br/>
       <SpectrogramSurfer sxx={sxx_dog} src={src_dog}/>
+      <br/>
       <SpectrogramSurfer sxx={sxx_down} src={src_down}/>
+      <br/>
       <SpectrogramSurfer sxx={sxx_eight} src={src_eight}/>
     </div>
   )
