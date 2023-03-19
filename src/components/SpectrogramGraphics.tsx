@@ -1,6 +1,9 @@
 import { useRef, useEffect, useState } from 'react'
 import { max, min } from "d3";
 import colormap from 'colormap';
+import SpectrogramViewer from './SpectrogramViewer';
+import SpectrogramNavigator from './SpectrogramNavigator';
+import SpectrogramContent from './SpectrogramContent';
 
 const colors = colormap({
     colormap: 'viridis',
@@ -46,26 +49,18 @@ function SpectrogramCanvas(props: SpectrogramCanvasProps) {
         }
     }, [canvasRef]);
 
-    const svgContent = <image
-        width={100}
-        height={100}
-        x={0}
-        y={0}
-        href={dataURL}
-        preserveAspectRatio="none"
-        pointerEvents="none"
-    />
+    const spectrogramContent = <SpectrogramContent dataURL={dataURL} />
 
     return (
         <>
             <canvas hidden ref={canvasRef} height={sxx.length} width={sxx[0].length} />
-            <svg width={width} height={specHeight} viewBox={`${0},${0},${100},${100}`} preserveAspectRatio="none" >
-                {svgContent}
-            </svg>
+            <SpectrogramViewer width={width} height={specHeight} >
+                {spectrogramContent}
+            </SpectrogramViewer>
             <br />
-            <svg width={width} height={navHeight} viewBox={`${0},${0},${100},${100}`} preserveAspectRatio="none" >
-                {svgContent}
-            </svg>
+            <SpectrogramNavigator width={width} height={navHeight} >
+                {spectrogramContent}
+            </SpectrogramNavigator>
         </>
     )
 }

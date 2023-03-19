@@ -18,30 +18,37 @@ import src_eight from "./assets/eight.wav";
 
 const data = [
   {
+    key: "backward",
     sxx: sxx_backward,
     src: src_backward
   },
   {
+    key: "bed",
     sxx: sxx_bed,
     src: src_bed
   },
   {
+    key: "bird",
     sxx: sxx_bird,
     src: src_bird
   },
   {
+    key: "cat",
     sxx: sxx_cat,
     src: src_cat
   },
   {
+    key: "dog",
     sxx: sxx_dog,
     src: src_dog
   },
   {
+    key: "down",
     sxx: sxx_down,
     src: src_down
   },
   {
+    key: "eight",
     sxx: sxx_eight,
     src: src_eight
   }
@@ -51,8 +58,8 @@ function App() {
 
   return (
     <div>
-      {data.map(({ sxx, src }) => (
-        <SpectrogramSurfer sxx={sxx} src={src} width={400} specHeight={80} navHeight={30} />
+      {data.map(({ key, sxx, src }) => (
+        <SpectrogramSurfer key={key} sxx={sxx} src={src} width={400} specHeight={80} navHeight={30} />
       ))}
     </div >
   )
