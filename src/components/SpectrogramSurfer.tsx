@@ -1,5 +1,6 @@
 import SpectrogramGraphics from './SpectrogramGraphics';
 import SpectrogramAudio from './SpectrogramAudio';
+import PlaybackProvider from "../context/PlaybackProvider";
 
 interface SpectrogramSurferProps {
     sxx: number[][]
@@ -14,8 +15,10 @@ function SpectrogramSurfer(props: SpectrogramSurferProps) {
 
     return (
         <div style={{ width: width }}>
-            <SpectrogramGraphics sxx={sxx} width={width} specHeight={specHeight} navHeight={navHeight} />
-            <SpectrogramAudio src={src} width={width} />
+            <PlaybackProvider>
+                <SpectrogramGraphics sxx={sxx} width={width} specHeight={specHeight} navHeight={navHeight} />
+                <SpectrogramAudio src={src} width={width} />
+            </PlaybackProvider>
         </div >
     )
 }

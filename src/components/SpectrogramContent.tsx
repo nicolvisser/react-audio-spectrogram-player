@@ -1,15 +1,5 @@
-import { useRef, useEffect, useState } from 'react'
-import { max, min } from "d3";
-import colormap from 'colormap';
-import SpectrogramViewer from './SpectrogramViewer';
-import SpectrogramNavigator from './SpectrogramNavigator';
+import { usePlaybackCurrent, usePlaybackDuration } from "../context/PlaybackProvider";
 
-const colors = colormap({
-    colormap: 'viridis',
-    nshades: 256,
-    format: 'rgba',
-    alpha: 255,
-});
 
 interface SpectrogramContentProps {
     dataURL: string
@@ -18,16 +8,29 @@ interface SpectrogramContentProps {
 function SpectrogramContent(props: SpectrogramContentProps) {
     const { dataURL } = props
 
+    const { duration } = usePlaybackDuration()
+    const { current } = usePlaybackCurrent()
+
     return (
-        <image
-            width={100}
-            height={100}
-            x={0}
-            y={0}
-            href={dataURL}
-            preserveAspectRatio="none"
-            pointerEvents="none"
-        />
+        <>
+            <image
+                width={100}
+                height={100}
+                x={0}
+                y={0}
+                href={dataURL}
+                preserveAspectRatio="none"
+                pointerEvents="none"
+            />
+            <line
+                stroke="red"
+                strokeWidth={1}
+                x1={current / duration * 100}
+                x2={current / duration * 100}
+                y1={0}
+                y2={100}
+            />
+        </>
     )
 }
 
