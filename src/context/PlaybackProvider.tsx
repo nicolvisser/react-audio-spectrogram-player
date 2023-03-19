@@ -22,7 +22,6 @@ function PlaybackProvider(props: PlaybackProviderProps) {
     const { children } = props
     const [duration, setDuration] = useState(1)
     const [currentTime, setCurrentTime] = useState(0)
-    console.log(duration)
     return (
         <PlaybackContext.Provider value={{ duration, currentTime, setDuration, setCurrentTime }}>
             {children}
