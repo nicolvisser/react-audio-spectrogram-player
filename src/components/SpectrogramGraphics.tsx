@@ -24,7 +24,11 @@ function SpectrogramCanvas(props: SpectrogramCanvasProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const [dataURL, setDataURL] = useState<string>("")
 
+    const viewStart = 25 // percent
+    const viewEnd = 75 // percent
+
     useEffect(() => {
+        // Loads the spectrogram (sxx) onto a canvas when either the spectrogram or canvas changes
         if (canvasRef.current) {
             const ctx = canvasRef.current.getContext('2d')
             if (ctx) {
@@ -47,18 +51,18 @@ function SpectrogramCanvas(props: SpectrogramCanvasProps) {
                 }
             }
         }
-    }, [canvasRef]);
+    }, [sxx, canvasRef]);
 
     const spectrogramContent = <SpectrogramContent dataURL={dataURL} />
 
     return (
         <>
             <canvas hidden ref={canvasRef} height={sxx.length} width={sxx[0].length} />
-            <SpectrogramViewer width={width} height={specHeight} >
+            <SpectrogramViewer width={width} height={specHeight} start={viewStart} end={viewEnd}>
                 {spectrogramContent}
             </SpectrogramViewer>
             <br />
-            <SpectrogramNavigator width={width} height={navHeight} >
+            <SpectrogramNavigator width={width} height={navHeight} start={viewStart} end={viewEnd} >
                 {spectrogramContent}
             </SpectrogramNavigator>
         </>

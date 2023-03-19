@@ -59,7 +59,7 @@ function App() {
   return (
     <div>
       {data.map(({ key, sxx, src }) => (
-        <SpectrogramSurfer key={key} sxx={sxx} src={src} width={400} specHeight={80} navHeight={30} />
+        <SpectrogramSurfer key={key} sxx={sxx} src={src} width={400} specHeight={80} navHeight={20} />
       ))}
     </div >
   )
