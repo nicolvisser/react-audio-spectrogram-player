@@ -1,6 +1,5 @@
 import { useRef } from "react";
 import { usePlayback } from "../context/PlaybackProvider";
-import { select, easeLinear } from 'd3';
 
 
 interface SpectrogramContentProps {
@@ -11,21 +10,7 @@ function SpectrogramContent(props: SpectrogramContentProps) {
     const { dataURL } = props
     const playheadRef = useRef<SVGLineElement>(null);
 
-    const { duration, currentTime, playbackRate } = usePlayback()
-
-
-    const jumpToPositionThenAnimateAgain = () =>
-        select(playheadRef.current)
-            .transition()
-            .ease(easeLinear)
-            .attr('x1', 0)
-            .attr('x2', 0)
-            .duration(1)
-            .transition()
-            .ease(easeLinear)
-            .attr('x1', duration)
-            .attr('x2', duration)
-            .duration((1000 * (duration - currentTime)) / playbackRate);
+    const { duration, currentTime } = usePlayback()
 
     return (
         <>
