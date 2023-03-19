@@ -1,24 +1,17 @@
 import { createContext, useState, useContext, SetStateAction, Dispatch } from 'react';
 
-export type PlaybackDurationContextType = {
+export type PlaybackContextType = {
     duration: number
+    currentTime: number
     setDuration: Dispatch<SetStateAction<number>>
+    setCurrentTime: Dispatch<SetStateAction<number>>
 };
 
-export type PlaybackCurrentContextType = {
-    current: number
-    setCurrent: Dispatch<SetStateAction<number>>
-};
+export const PlaybackContext = createContext<PlaybackContextType>({ duration: 1, currentTime: 1, setDuration: () => { }, setCurrentTime: () => { } });
 
-export const PlaybackDurationContext = createContext<PlaybackDurationContextType>({ duration: 1, setDuration: () => { } });
-export const PlaybackCurrentContext = createContext<PlaybackCurrentContextType>({ current: 1, setCurrent: () => { } });
 
-export function usePlaybackDuration() {
-    return useContext(PlaybackDurationContext);
-}
-
-export function usePlaybackCurrent() {
-    return useContext(PlaybackCurrentContext);
+export function usePlayback() {
+    return useContext(PlaybackContext);
 }
 
 export type PlaybackProviderProps = {
@@ -28,13 +21,12 @@ export type PlaybackProviderProps = {
 function PlaybackProvider(props: PlaybackProviderProps) {
     const { children } = props
     const [duration, setDuration] = useState(1)
-    const [current, setCurrent] = useState(0)
+    const [currentTime, setCurrentTime] = useState(0)
+    console.log(duration)
     return (
-        <PlaybackDurationContext.Provider value={{ duration: duration, setDuration: setDuration }}>
-            <PlaybackCurrentContext.Provider value={{ current: current, setCurrent: setCurrent }}>
-                {children}
-            </PlaybackCurrentContext.Provider >
-        </PlaybackDurationContext.Provider >
+        <PlaybackContext.Provider value={{ duration, currentTime, setDuration, setCurrentTime }}>
+            {children}
+        </PlaybackContext.Provider >
     )
 };
 

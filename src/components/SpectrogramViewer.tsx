@@ -2,15 +2,15 @@ interface SpectrogramViewerProps {
     children: JSX.Element
     width: number
     height: number
-    start: number
-    end: number
+    startTime: number
+    endTime: number
 }
 
 function SpectrogramViewer(props: SpectrogramViewerProps) {
-    const { children, width, height, start, end } = props
+    const { children, width, height, startTime, endTime } = props
 
     return (
-        <svg width={width} height={height} viewBox={`${start},${0},${end - start},${100}`} preserveAspectRatio="none" >
+        <svg width={width} height={height} viewBox={`${startTime},0,${endTime - startTime},100`} preserveAspectRatio="none" >
             {children}
         </svg>
     )

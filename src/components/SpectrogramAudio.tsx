@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { usePlaybackCurrent, usePlaybackDuration } from "../context/PlaybackProvider";
+import { usePlayback } from "../context/PlaybackProvider";
 
 
 interface SpectrogramAudioProps {
@@ -11,27 +11,30 @@ function SpectrogramAudio(props: SpectrogramAudioProps) {
     const { src, width } = props
     const audioRef = useRef<HTMLAudioElement>(null)
 
-    const { setDuration } = usePlaybackDuration()
-    const { setCurrent } = usePlaybackCurrent()
+    const { setDuration, setCurrentTime } = usePlayback()
 
     useEffect(() => {
         if (audioRef.current !== null) {
-            setCurrent(audioRef.current.currentTime)
-            setDuration(audioRef.current.duration);
+            if (audioRef.current.currentTime) {
+                setCurrentTime(audioRef.current.currentTime);
+            }
+            if (audioRef.current.duration) {
+                setDuration(audioRef.current.duration);
+            }
         }
     }, [audioRef.current]);
 
     const onTimeUpdate = (e: React.SyntheticEvent<HTMLAudioElement, Event>) => {
-        const target = e.target;
-        if (target instanceof HTMLMediaElement) {
-            setCurrent(target.currentTime)
+        if (audioRef.current !== null) {
+            setCurrentTime(audioRef.current.currentTime)
         }
     }
 
     const onDurationChange = (e: React.SyntheticEvent<HTMLAudioElement, Event>) => {
-        const target = e.target;
-        if (target instanceof HTMLMediaElement) {
-            setDuration(target.duration);
+        if (audioRef.current !== null) {
+            if (audioRef.current.duration) {
+                setDuration(audioRef.current.duration);
+            }
         }
     }
 

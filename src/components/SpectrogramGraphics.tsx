@@ -12,20 +12,20 @@ const colors = colormap({
     alpha: 255,
 });
 
-interface SpectrogramCanvasProps {
+interface SpectrogramGraphicsProps {
     sxx: number[][]
     width: number
     specHeight: number
     navHeight: number
 }
 
-function SpectrogramCanvas(props: SpectrogramCanvasProps) {
+function SpectrogramGraphics(props: SpectrogramGraphicsProps) {
     const { sxx, width, specHeight, navHeight } = props
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const [dataURL, setDataURL] = useState<string>("")
 
-    const viewStart = 25 // percent
-    const viewEnd = 75 // percent
+    const startTime = 0.25 // seconds
+    const endTime = 0.75 // seconds
 
     useEffect(() => {
         // Loads the spectrogram (sxx) onto a canvas when either the spectrogram or canvas changes
@@ -58,15 +58,15 @@ function SpectrogramCanvas(props: SpectrogramCanvasProps) {
     return (
         <>
             <canvas hidden ref={canvasRef} height={sxx.length} width={sxx[0].length} />
-            <SpectrogramViewer width={width} height={specHeight} start={viewStart} end={viewEnd}>
+            <SpectrogramViewer width={width} height={specHeight} startTime={startTime} endTime={endTime}>
                 {spectrogramContent}
             </SpectrogramViewer>
             <br />
-            <SpectrogramNavigator width={width} height={navHeight} start={viewStart} end={viewEnd} >
+            <SpectrogramNavigator width={width} height={navHeight} startTime={startTime} endTime={endTime} >
                 {spectrogramContent}
             </SpectrogramNavigator>
         </>
     )
 }
 
-export default SpectrogramCanvas
+export default SpectrogramGraphics

@@ -1,4 +1,4 @@
-import { usePlaybackCurrent, usePlaybackDuration } from "../context/PlaybackProvider";
+import { usePlayback } from "../context/PlaybackProvider";
 
 
 interface SpectrogramContentProps {
@@ -8,13 +8,12 @@ interface SpectrogramContentProps {
 function SpectrogramContent(props: SpectrogramContentProps) {
     const { dataURL } = props
 
-    const { duration } = usePlaybackDuration()
-    const { current } = usePlaybackCurrent()
+    const { duration, currentTime } = usePlayback()
 
     return (
         <>
             <image
-                width={100}
+                width={duration}
                 height={100}
                 x={0}
                 y={0}
@@ -24,9 +23,9 @@ function SpectrogramContent(props: SpectrogramContentProps) {
             />
             <line
                 stroke="red"
-                strokeWidth={1}
-                x1={current / duration * 100}
-                x2={current / duration * 100}
+                strokeWidth={0.005 * duration}
+                x1={currentTime}
+                x2={currentTime}
                 y1={0}
                 y2={100}
             />
