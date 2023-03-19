@@ -4,6 +4,8 @@ import colormap from 'colormap';
 import SpectrogramViewer from './SpectrogramViewer';
 import SpectrogramNavigator from './SpectrogramNavigator';
 import SpectrogramContent from './SpectrogramContent';
+import ZoomProvider from '../context/ZoomProvider';
+import { usePlayback } from '../context/PlaybackProvider';
 
 const colors = colormap({
     colormap: 'viridis',
@@ -23,6 +25,7 @@ function SpectrogramGraphics(props: SpectrogramGraphicsProps) {
     const { sxx, width, specHeight, navHeight } = props
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const [dataURL, setDataURL] = useState<string>("")
+    const { duration } = usePlayback()
 
     const startTime = 0.00 // seconds
     const endTime = 1.00 // seconds
@@ -58,13 +61,16 @@ function SpectrogramGraphics(props: SpectrogramGraphicsProps) {
     return (
         <>
             <canvas hidden ref={canvasRef} height={sxx.length} width={sxx[0].length} />
-            <SpectrogramViewer width={width} height={specHeight} startTime={startTime} endTime={endTime}>
-                {spectrogramContent}
-            </SpectrogramViewer>
-            <br />
-            <SpectrogramNavigator width={width} height={navHeight} startTime={startTime} endTime={endTime} >
-                {spectrogramContent}
-            </SpectrogramNavigator>
+            <ZoomProvider duration={duration}>
+                <SpectrogramViewer width={width} height={specHeight}>
+                    {spectrogramContent}
+                </SpectrogramViewer>
+                <br />
+                <SpectrogramNavigator width={width} height={navHeight} >
+                    {spectrogramContent}
+                </SpectrogramNavigator>
+
+            </ZoomProvider>
         </>
     )
 }
