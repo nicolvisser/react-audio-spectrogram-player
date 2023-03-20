@@ -60,9 +60,8 @@ function App() {
   return (
     <div>
       {data.map(({ key, sxx, src }) => (
-        <div style={{ marginTop: 40, marginLeft: 'auto', marginRight: 'auto', width: 400 }}>
+        <div key={key} style={{ marginTop: 40, marginLeft: 'auto', marginRight: 'auto', width: 400 }}>
           <SpectrogramSurfer
-            key={key}
             sxx={sxx}
             src={src}
             width={400}
