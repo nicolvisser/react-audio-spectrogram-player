@@ -4,15 +4,14 @@ import { useZoom } from "../context/ZoomProvider";
 
 interface SpectrogramNavigatorProps {
     children: JSX.Element
-    width: number
     height: number
 }
 
 const MINIMUM_ZOOM_WINDOW_DURATION = 0.01
 
 function SpectrogramNavigator(props: SpectrogramNavigatorProps) {
-    const { children, width, height } = props
-    const { duration } = usePlayback()
+    const { children, height } = props
+    const { duration, setCurrentTime } = usePlayback()
     const { startTime, endTime, setStartTime, setEndTime } = useZoom()
     const svgRef = useRef<SVGSVGElement>(null);
     const [dragStart, setDragStart] = useState<number | null>(null)
@@ -42,10 +41,12 @@ function SpectrogramNavigator(props: SpectrogramNavigatorProps) {
             if (dragEnd - dragStart >= MINIMUM_ZOOM_WINDOW_DURATION) {
                 setStartTime(dragStart)
                 setEndTime(dragEnd)
+                setCurrentTime(dragStart)
             }
             else {
                 setStartTime(0)
                 setEndTime(duration)
+                setCurrentTime(0)
             }
         }
         setDragStart(null)
@@ -53,7 +54,7 @@ function SpectrogramNavigator(props: SpectrogramNavigatorProps) {
     }
 
     return (
-        <svg ref={svgRef} width={width} height={height} viewBox={`0,0,${duration},100`} cursor="zoom-in" preserveAspectRatio="none" onPointerDown={onPointerDown} onPointerUp={onPointerUp} onPointerMove={onPointerMove} >
+        <svg ref={svgRef} width="100%" height={height} viewBox={`0,0,${duration},100`} cursor="zoom-in" preserveAspectRatio="none" onPointerDown={onPointerDown} onPointerUp={onPointerUp} onPointerMove={onPointerMove} >
             {children}
             <rect x={0} width={startTime} y="0" height="100" style={{ fill: 'white', opacity: 0.5 }} />
             <rect x={endTime} width={100 - endTime} y="0" height="100" style={{ fill: 'white', opacity: 0.5 }} />

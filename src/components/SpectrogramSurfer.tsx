@@ -15,7 +15,6 @@ import PlaybackProvider from "../context/PlaybackProvider";
 interface SpectrogramSurferProps {
     sxx: number[][]
     src: string
-    width: number
     specHeight: number
     navHeight: number
     colormap?: string
@@ -25,7 +24,7 @@ interface SpectrogramSurferProps {
 }
 
 const SpectrogramSurfer = (props: SpectrogramSurferProps) => {
-    const { sxx, src, width, specHeight, navHeight } = props
+    const { sxx, src, specHeight, navHeight } = props
     const colormap = props.colormap ? props.colormap : 'viridis'
     const transparent = props.transparent ? true : false
     const settings = props.settings ? true : false
@@ -34,9 +33,9 @@ const SpectrogramSurfer = (props: SpectrogramSurferProps) => {
     return (
         <ThemeProvider theme={dark ? darkTheme : defaultTheme}>
             <CssBaseline />
-            <div style={{ width: width }}>
+            <div style={{ width: '100%' }}>
                 <PlaybackProvider src={src} settings={settings}>
-                    <SpectrogramGraphics sxx={sxx} width={width} specHeight={specHeight} navHeight={navHeight} colormap={colormap} transparent={transparent} />
+                    <SpectrogramGraphics sxx={sxx} specHeight={specHeight} navHeight={navHeight} colormap={colormap} transparent={transparent} />
                 </PlaybackProvider>
             </div >
         </ThemeProvider>

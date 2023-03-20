@@ -4,12 +4,11 @@ import { useZoom } from "../context/ZoomProvider";
 
 interface SpectrogramViewerProps {
     children: JSX.Element
-    width: number
     height: number
 }
 
 function SpectrogramViewer(props: SpectrogramViewerProps) {
-    const { children, width, height } = props
+    const { children, height } = props
     const { duration, setCurrentTime } = usePlayback()
     const svgRef = useRef<SVGSVGElement>(null);
     const { startTime, endTime } = useZoom()
@@ -31,7 +30,7 @@ function SpectrogramViewer(props: SpectrogramViewerProps) {
     }
 
     return (
-        <svg ref={svgRef} width={width} height={height} viewBox={`${startTime},0,${endTime - startTime},100`} cursor="pointer" preserveAspectRatio="none" onClick={onClick} >
+        <svg ref={svgRef} width="100%" height={height} viewBox={`${startTime},0,${endTime - startTime},100`} cursor="pointer" preserveAspectRatio="none" onClick={onClick} >
             {children}
         </svg>
     )
