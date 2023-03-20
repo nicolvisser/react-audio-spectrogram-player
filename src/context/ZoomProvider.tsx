@@ -48,7 +48,7 @@ function ZoomProvider(props: ZoomProviderProps) {
                 pause()
                 setCurrentTime(startTime)
             }
-            if (currentTime > endTime + 0.1) {
+            else if (currentTime > endTime + 0.1) {
                 const newStartTime = endTime
                 const newEndTime = endTime + zoomedDuration
                 setStartTime(newStartTime)
@@ -65,7 +65,7 @@ function ZoomProvider(props: ZoomProviderProps) {
             if (currentTime >= endTime && currentTime <= endTime + 0.1) {
                 setCurrentTime(startTime)
             }
-            if (currentTime > endTime + 0.1) {
+            else if (currentTime > endTime + 0.1) {
                 const newStartTime = endTime
                 const newEndTime = endTime + zoomedDuration
                 setStartTime(newStartTime)
@@ -79,11 +79,20 @@ function ZoomProvider(props: ZoomProviderProps) {
             }
         }
         else if (mode === "page") {
-            if (currentTime > endTime) {
+            if (currentTime >= endTime && currentTime <= endTime + 0.1) {
                 nextPage()
             }
-            else if (currentTime < startTime) {
-                previousPage()
+            else if (currentTime > endTime + 0.1) {
+                const newStartTime = endTime
+                const newEndTime = endTime + zoomedDuration
+                setStartTime(newStartTime)
+                setEndTime(newEndTime)
+            }
+            else if (currentTime < startTime - 0.1) {
+                const newStartTime = startTime - zoomedDuration
+                const newEndTime = startTime
+                setStartTime(newStartTime)
+                setEndTime(newEndTime)
             }
         }
         else if (mode === "continue") {
