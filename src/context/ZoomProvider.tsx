@@ -80,24 +80,10 @@ function ZoomProvider(props: ZoomProviderProps) {
         }
         else if (mode === "page") {
             if (currentTime > endTime) {
-                const newStartTime = endTime
-                const newEndTime = endTime + zoomedDuration
-                setStartTime(newStartTime)
-                setEndTime(newEndTime)
+                nextPage()
             }
             else if (currentTime < startTime) {
-                const newStartTime = startTime - zoomedDuration
-                const newEndTime = startTime
-                setStartTime(newStartTime)
-                setEndTime(newEndTime)
-            }
-        }
-        else if (mode === "slide") {
-            if (currentTime > (startTime + endTime) / 2) {
-                setCenterTime(currentTime)
-            }
-            else if (currentTime < (startTime + endTime) / 2) {
-                setCenterTime(currentTime)
+                previousPage()
             }
         }
         else if (mode === "continue") {
@@ -113,12 +99,27 @@ function ZoomProvider(props: ZoomProviderProps) {
         setEndTime(newEndTime)
         setCurrentTime(newStartTime)
     }
+
     const zoomOut = () => {
         const newStartTime = Math.max(0, startTime - (1 / 3) * zoomedDuration)
         const newEndTime = Math.min(duration, endTime + (1 / 3) * zoomedDuration)
         setStartTime(newStartTime)
         setEndTime(newEndTime)
         setCurrentTime(newStartTime)
+    }
+
+    const nextPage = () => {
+        const newEndTime = Math.min(duration, endTime + zoomedDuration)
+        const newStartTime = Math.max(0, newEndTime - zoomedDuration)
+        setStartTime(newStartTime)
+        setEndTime(newEndTime)
+    }
+
+    const previousPage = () => {
+        const newStartTime = Math.max(0, startTime - zoomedDuration)
+        const newEndTime = Math.min(duration, newStartTime + zoomedDuration)
+        setStartTime(newStartTime)
+        setEndTime(newEndTime)
     }
 
     const isZoomed = startTime > 0 || endTime < duration

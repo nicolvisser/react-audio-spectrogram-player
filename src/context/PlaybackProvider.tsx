@@ -121,7 +121,7 @@ function PlaybackProvider(props: PlaybackProviderProps) {
         <PlaybackContext.Provider value={{ duration, currentTime, playbackRate, mode, setDuration, setCurrentTime, setPlaybackRate, pause }}>
             {children}
             <Stack spacing={1} direction="row" alignItems='center' >
-                <audio ref={audioRef} controls style={{ width: '100%' }} onTimeUpdate={onTimeUpdate} onDurationChange={onDurationChange}>
+                <audio ref={audioRef} controls style={{ marginTop: 7, width: '100%' }} onTimeUpdate={onTimeUpdate} onDurationChange={onDurationChange}>
                     <source src={src} />
                 </audio>
                 {settings && (
@@ -159,7 +159,6 @@ function PlaybackProvider(props: PlaybackProviderProps) {
                                 <MenuItem value={"loop"}>Loop</MenuItem>
                                 <MenuItem value={"continue"}>Continue</MenuItem>
                                 <MenuItem value={"page"}>Page</MenuItem>
-                                <MenuItem value={"slide"}>Slide</MenuItem>
                             </Select>
                             <FormHelperText>What happens when playhead reaches end of window.</FormHelperText>
                         </FormControl>
