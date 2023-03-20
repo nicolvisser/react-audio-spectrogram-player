@@ -63,7 +63,7 @@ function SpectrogramGraphics(props: SpectrogramGraphicsProps) {
     return (
         <>
             <canvas hidden ref={canvasRef} height={sxx.length} width={sxx[0].length} />
-            <ZoomProvider duration={duration}>
+            <ZoomProvider>
                 <SpectrogramViewer width={width} height={specHeight}>
                     {spectrogramContent}
                 </SpectrogramViewer>

@@ -1,6 +1,7 @@
 import SpectrogramSurfer from "./components/SpectrogramSurfer";
 import './App.css'
 
+import sxx_long from "./assets/long.json";
 import sxx_backward from "./assets/backward.json";
 import sxx_bed from "./assets/bed.json";
 import sxx_bird from "./assets/bird.json";
@@ -9,6 +10,7 @@ import sxx_dog from "./assets/dog.json";
 import sxx_down from "./assets/down.json";
 import sxx_eight from "./assets/eight.json";
 
+import src_long from "./assets/long.wav";
 import src_backward from "./assets/backward.wav";
 import src_bed from "./assets/bed.wav";
 import src_bird from "./assets/bird.wav";
@@ -18,6 +20,11 @@ import src_down from "./assets/down.wav";
 import src_eight from "./assets/eight.wav";
 
 const data = [
+  {
+    key: "long",
+    sxx: sxx_long,
+    src: src_long
+  },
   {
     key: "backward",
     sxx: sxx_backward,
@@ -67,6 +74,7 @@ function App() {
             width={400}
             specHeight={150}
             navHeight={20}
+            transparent
           />
         </div >
       ))}

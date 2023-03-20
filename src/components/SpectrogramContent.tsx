@@ -1,5 +1,6 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { usePlayback } from "../context/PlaybackProvider";
+import { useZoom } from "../context/ZoomProvider";
 
 
 interface SpectrogramContentProps {
@@ -11,6 +12,7 @@ function SpectrogramContent(props: SpectrogramContentProps) {
     const playheadRef = useRef<SVGLineElement>(null);
 
     const { duration, currentTime } = usePlayback()
+    const { zoomedDuration } = useZoom()
 
     return (
         <>
@@ -26,7 +28,7 @@ function SpectrogramContent(props: SpectrogramContentProps) {
             <line
                 ref={playheadRef}
                 stroke="red"
-                strokeWidth={0.005 * duration}
+                strokeWidth={0.005 * zoomedDuration}
                 x1={currentTime}
                 x2={currentTime}
                 y1={0}
