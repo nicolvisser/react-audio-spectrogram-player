@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { usePlayback } from "../context/PlaybackProvider";
 import { useZoom } from "../context/ZoomProvider";
 

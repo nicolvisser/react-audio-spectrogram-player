@@ -72,8 +72,11 @@ function App() {
             src={src}
             width={600}
             specHeight={300}
-            navHeight={60}
-            transparent
+            navHeight={60}  
+            colormap="viridis"
+            transparent={false}
+            settings
+            dark={true}
           />
         </div >
       ))}

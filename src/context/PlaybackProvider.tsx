@@ -1,5 +1,5 @@
 import { Speed, Tune, } from '@mui/icons-material';
-import { FormControl, FormHelperText, MenuItem, Select, SelectChangeEvent, Slider, Stack, Typography } from '@mui/material';
+import { Fab, FormControl, FormHelperText, MenuItem, Select, SelectChangeEvent, Slider, Stack, Typography } from '@mui/material';
 import { createContext, useState, useEffect, useRef, useContext, SetStateAction, Dispatch } from 'react';
 
 export type PlaybackContextType = {
@@ -23,7 +23,7 @@ export function usePlayback() {
 export type PlaybackProviderProps = {
     children: JSX.Element | JSX.Element[]
     src: string
-    width: number
+    settings: boolean
 };
 
 const playbackRateSliderMarks = [
@@ -51,12 +51,15 @@ function playbackRateSliderValueText(value: number) {
 const CURRENT_TIME_UPDATE_INTERVAL = 10
 
 function PlaybackProvider(props: PlaybackProviderProps) {
-    const { children, src, width } = props
+    const { children, src } = props
+    const settings = props.settings ? true : false
     const [duration, setDuration] = useState(1)
     const [currentTime, _setCurrentTime] = useState(0)
     const [playbackRate, _setPlaybackRate] = useState(1.0)
     const [mode, setMode] = useState<string>("stop")
     const audioRef = useRef<HTMLAudioElement>(null)
+    const [showSettingsPanel, setShowSettingsPanel] = useState(false)
+
 
     useEffect(() => {
         if (audioRef.current !== null) {
@@ -117,43 +120,52 @@ function PlaybackProvider(props: PlaybackProviderProps) {
     return (
         <PlaybackContext.Provider value={{ duration, currentTime, playbackRate, mode, setDuration, setCurrentTime, setPlaybackRate, pause }}>
             {children}
-            <Stack direction="column" sx={{ mb: 1 }}>
-                <Stack spacing={2} direction="row" alignItems="center">
-                    <Speed color='primary' />
-                    <Typography variant="caption">Playback Speed</Typography>
-                    <Slider
-                        aria-label="Playback Rate Slider"
-                        onChange={handlePlaybackRateChange}
-                        defaultValue={1.0}
-                        valueLabelFormat={playbackRateSliderValueText}
-                        valueLabelDisplay="auto"
-                        marks={playbackRateSliderMarks}
-                        min={0.1}
-                        step={0.1}
-                        max={2.0} />
-                </Stack>
-                <Stack spacing={2} direction="row" alignItems="center">
-                    <Tune color='primary' />
-                    <Typography variant="caption">Playhead mode</Typography>
-                    <FormControl size="small" sx={{ m: 1, width: '100%' }}>
-                        <Select
-                            id="mode-select"
-                            defaultValue={"stop"}
-                            onChange={handleModeChange}
-                        >
-                            <MenuItem value={"stop"}>Stop</MenuItem>
-                            <MenuItem value={"loop"}>Loop</MenuItem>
-                            <MenuItem value={"continue"}>Continue</MenuItem>
-                            <MenuItem value={"page"}>Page</MenuItem>
-                            <MenuItem value={"slide"}>Slide</MenuItem>
-                        </Select>
-                        <FormHelperText>What happens when playhead reaches end of window.</FormHelperText>
-                    </FormControl>
-                </Stack>
+            <Stack spacing={1} direction="row" alignItems='center' >
+                <audio ref={audioRef} controls style={{ width: '100%' }} onTimeUpdate={onTimeUpdate} onDurationChange={onDurationChange}>
+                    <source src={src} />
+                </audio>
+                {settings && (
+                    <Fab variant="circular" size="small" color="primary" onClick={() => { setShowSettingsPanel(!showSettingsPanel) }}>
+                        <Tune />
+                    </Fab>
+                )}
             </Stack>
-            <audio ref={audioRef} controls style={{ width: width }} onTimeUpdate={onTimeUpdate} onDurationChange={onDurationChange}>
-                <source src={src} />
-            </audio>
+            {settings && (
+                <Stack direction="column" sx={{ mt: 2, display: showSettingsPanel ? 'block' : 'none' }}>
+                    <Stack spacing={2} direction="row" alignItems="center">
+                        <Speed color='primary' />
+                        <Typography variant="caption">Playback Speed</Typography>
+                        <Slider
+                            aria-label="Playback Rate Slider"
+                            onChange={handlePlaybackRateChange}
+                            defaultValue={1.0}
+                            valueLabelFormat={playbackRateSliderValueText}
+                            valueLabelDisplay="auto"
+                            marks={playbackRateSliderMarks}
+                            min={0.1}
+                            step={0.1}
+                            max={2.0} />
+                    </Stack>
+                    <Stack spacing={2} direction="row" alignItems="center">
+                        <Tune color='primary' />
+                        <Typography variant="caption">Playhead mode</Typography>
+                        <FormControl size="small" sx={{ m: 1, width: '100%' }}>
+                            <Select
+                                id="mode-select"
+                                defaultValue={"stop"}
+                                onChange={handleModeChange}
+                            >
+                                <MenuItem value={"stop"}>Stop</MenuItem>
+                                <MenuItem value={"loop"}>Loop</MenuItem>
+                                <MenuItem value={"continue"}>Continue</MenuItem>
+                                <MenuItem value={"page"}>Page</MenuItem>
+                                <MenuItem value={"slide"}>Slide</MenuItem>
+                            </Select>
+                            <FormHelperText>What happens when playhead reaches end of window.</FormHelperText>
+                        </FormControl>
+                    </Stack>
+                </Stack>
+            )}
         </PlaybackContext.Provider >
     )
 };
