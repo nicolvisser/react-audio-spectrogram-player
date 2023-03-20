@@ -6,6 +6,9 @@ import SpectrogramNavigator from './SpectrogramNavigator';
 import SpectrogramContent from './SpectrogramContent';
 import ZoomProvider from '../context/ZoomProvider';
 import { usePlayback } from '../context/PlaybackProvider';
+import { Stack } from '@mui/system';
+import { ZoomIn, ZoomOut } from '@mui/icons-material';
+import { IconButton } from '@mui/material';
 
 interface SpectrogramGraphicsProps {
     sxx: number[][]
@@ -70,7 +73,6 @@ function SpectrogramGraphics(props: SpectrogramGraphicsProps) {
                 <SpectrogramNavigator height={navHeight} >
                     {spectrogramContent}
                 </SpectrogramNavigator>
-
             </ZoomProvider>
         </>
     )
