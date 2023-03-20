@@ -1,34 +1,36 @@
 import { useRef, useEffect, useState } from 'react'
 import { max, min } from "d3";
-import colormap from 'colormap';
+import createColorMap from 'colormap';
 import SpectrogramViewer from './SpectrogramViewer';
 import SpectrogramNavigator from './SpectrogramNavigator';
 import SpectrogramContent from './SpectrogramContent';
 import ZoomProvider from '../context/ZoomProvider';
 import { usePlayback } from '../context/PlaybackProvider';
 
-const colors = colormap({
-    colormap: 'viridis',
-    nshades: 256,
-    format: 'rgba',
-    alpha: 255,
-});
-
 interface SpectrogramGraphicsProps {
     sxx: number[][]
     width: number
     specHeight: number
     navHeight: number
+    colormap: string
+    transparent: boolean
 }
 
 function SpectrogramGraphics(props: SpectrogramGraphicsProps) {
-    const { sxx, width, specHeight, navHeight } = props
+    const { sxx, width, specHeight, navHeight, colormap, transparent } = props
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const [dataURL, setDataURL] = useState<string>("")
     const { duration } = usePlayback()
 
     const startTime = 0.00 // seconds
     const endTime = 1.00 // seconds
+
+    const colors = createColorMap({
+        colormap: colormap,
+        nshades: 256,
+        format: 'rgba',
+        alpha: 255,
+    });
 
     useEffect(() => {
         // Loads the spectrogram (sxx) onto a canvas when either the spectrogram or canvas changes
@@ -46,7 +48,7 @@ function SpectrogramGraphics(props: SpectrogramGraphicsProps) {
                             imageData.data[redIndex] = colors[num][0];
                             imageData.data[redIndex + 1] = colors[num][1];
                             imageData.data[redIndex + 2] = colors[num][2];
-                            imageData.data[redIndex + 3] = 255;
+                            imageData.data[redIndex + 3] = transparent ? num : 255
                         }
                     }
                     ctx.putImageData(imageData, 0, 0);
@@ -54,7 +56,7 @@ function SpectrogramGraphics(props: SpectrogramGraphicsProps) {
                 }
             }
         }
-    }, [sxx, canvasRef]);
+    }, [sxx, canvasRef, colormap, transparent]);
 
     const spectrogramContent = <SpectrogramContent dataURL={dataURL} />
 
