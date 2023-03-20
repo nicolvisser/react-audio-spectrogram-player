@@ -1,5 +1,4 @@
 import SpectrogramSurfer from "./components/SpectrogramSurfer";
-import './App.css'
 
 import sxx_long from "./assets/long.json";
 import sxx_backward from "./assets/backward.json";
@@ -67,13 +66,13 @@ function App() {
   return (
     <div>
       {data.map(({ key, sxx, src }) => (
-        <div key={key} style={{ marginTop: 40, marginLeft: 'auto', marginRight: 'auto', width: 400 }}>
+        <div key={key} style={{ marginTop: 40, marginLeft: 'auto', marginRight: 'auto', width: 700 }}>
           <SpectrogramSurfer
             sxx={sxx}
             src={src}
-            width={400}
-            specHeight={150}
-            navHeight={20}
+            width={600}
+            specHeight={300}
+            navHeight={60}
             transparent
           />
         </div >

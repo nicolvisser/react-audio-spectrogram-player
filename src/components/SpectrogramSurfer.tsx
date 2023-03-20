@@ -1,3 +1,12 @@
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+
+const darkTheme = createTheme({
+    palette: {
+        mode: 'dark',
+    },
+});
+
 import SpectrogramGraphics from './SpectrogramGraphics';
 import PlaybackProvider from "../context/PlaybackProvider";
 
@@ -17,11 +26,14 @@ const SpectrogramSurfer = (props: SpectrogramSurferProps) => {
     const transparent = props.transparent ? true : false
 
     return (
-        <div style={{ width: width }}>
-            <PlaybackProvider src={src} width={width}>
-                <SpectrogramGraphics sxx={sxx} width={width} specHeight={specHeight} navHeight={navHeight} colormap={colormap} transparent={transparent} />
-            </PlaybackProvider>
-        </div >
+        <ThemeProvider theme={darkTheme}>
+            <CssBaseline />
+            <div style={{ width: width }}>
+                <PlaybackProvider src={src} width={width}>
+                    <SpectrogramGraphics sxx={sxx} width={width} specHeight={specHeight} navHeight={navHeight} colormap={colormap} transparent={transparent} />
+                </PlaybackProvider>
+            </div >
+        </ThemeProvider>
     )
 }
 

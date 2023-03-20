@@ -23,21 +23,85 @@ export type ZoomProviderProps = {
 
 function ZoomProvider(props: ZoomProviderProps) {
     const { children } = props
-    const { duration } = usePlayback()
+    const { duration, currentTime, mode, pause, setCurrentTime } = usePlayback()
     const [startTime, setStartTime] = useState(0)
     const [endTime, setEndTime] = useState(duration)
 
     const zoomedDuration = endTime - startTime
+
+    const setCenterTime = (centerTime: number) => {
+        setStartTime(centerTime - zoomedDuration / 2)
+        setEndTime(centerTime + zoomedDuration / 2)
+    }
 
     useEffect(() => {
         setStartTime(0)
         setEndTime(duration)
     }, [duration])
 
-    const setCenterTime = (centerTime: number) => {
-        setStartTime(centerTime - zoomedDuration / 2)
-        setEndTime(centerTime + zoomedDuration / 2)
-    }
+    useEffect(() => {
+        if (mode === "stop") {
+            if (currentTime >= endTime && currentTime <= endTime + 0.1) {
+                pause()
+                setCurrentTime(startTime)
+            }
+            if (currentTime > endTime + 0.1) {
+                const newStartTime = endTime
+                const newEndTime = endTime + zoomedDuration
+                setStartTime(newStartTime)
+                setEndTime(newEndTime)
+            }
+            else if (currentTime < startTime - 0.1) {
+                const newStartTime = startTime - zoomedDuration
+                const newEndTime = startTime
+                setStartTime(newStartTime)
+                setEndTime(newEndTime)
+            }
+        }
+        else if (mode === "loop") {
+            if (currentTime >= endTime && currentTime <= endTime + 0.1) {
+                setCurrentTime(startTime)
+            }
+            if (currentTime > endTime + 0.1) {
+                const newStartTime = endTime
+                const newEndTime = endTime + zoomedDuration
+                setStartTime(newStartTime)
+                setEndTime(newEndTime)
+            }
+            else if (currentTime < startTime - 0.1) {
+                const newStartTime = startTime - zoomedDuration
+                const newEndTime = startTime
+                setStartTime(newStartTime)
+                setEndTime(newEndTime)
+            }
+        }
+        else if (mode === "page") {
+            if (currentTime > endTime) {
+                const newStartTime = endTime
+                const newEndTime = endTime + zoomedDuration
+                setStartTime(newStartTime)
+                setEndTime(newEndTime)
+            }
+            else if (currentTime < startTime) {
+                const newStartTime = startTime - zoomedDuration
+                const newEndTime = startTime
+                setStartTime(newStartTime)
+                setEndTime(newEndTime)
+            }
+        }
+        else if (mode === "slide") {
+            if (currentTime > (startTime + endTime) / 2) {
+                setCenterTime(currentTime)
+            }
+            else if (currentTime < (startTime + endTime) / 2) {
+                setCenterTime(currentTime)
+            }
+        }
+        else if (mode === "continue") {
+            // do nothings
+        }
+
+    }, [currentTime, mode])
 
     return (
         <ZoomContext.Provider value={{ startTime, endTime, zoomedDuration, setStartTime, setEndTime, setCenterTime }}>
