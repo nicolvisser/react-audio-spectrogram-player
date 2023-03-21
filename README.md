@@ -75,5 +75,4 @@ return (
 ## Future Updates
 
 - Calculate spectrogram with javascript when no `sxx` prop is supplied.
-- Option to show/hide the spectrogram navigator.
 - Touch screen compatibility.
