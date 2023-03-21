@@ -1,11 +1,22 @@
 import { useRef, useEffect, useState } from 'react'
-import { max, min } from "d3";
 import createColorMap from 'colormap';
 import SpectrogramViewer from './SpectrogramViewer';
 import SpectrogramNavigator from './SpectrogramNavigator';
 import SpectrogramContent from './SpectrogramContent';
 import ZoomProvider from './ZoomProvider';
 import { usePlayback } from './PlaybackProvider';
+
+function max(arr: number[][]) {
+    var maxRow = arr.map(function (row) { return Math.max.apply(Math, row); });
+    var max = Math.max.apply(null, maxRow);
+    return max
+}
+
+function min(arr: number[][]) {
+    var minRow = arr.map(function (row) { return Math.min.apply(Math, row); });
+    var max = Math.min.apply(null, minRow);
+    return max
+}
 
 interface SpectrogramGraphicsProps {
     sxx: number[][]
@@ -36,8 +47,8 @@ function SpectrogramGraphics(props: SpectrogramGraphicsProps) {
         if (canvasRef.current) {
             const ctx = canvasRef.current.getContext('2d')
             if (ctx) {
-                const smax = max(sxx, (d) => max(d));
-                const smin = min(sxx, (d) => min(d));
+                const smax = max(sxx);
+                const smin = min(sxx);
                 if (typeof smax !== 'undefined' && typeof smin !== 'undefined') {
                     let imageData = new ImageData(sxx[0].length, sxx.length);
                     for (let i = sxx.length - 1; i >= 0; i--) {

@@ -48,13 +48,11 @@
     "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.11.13",
-    "@tensorflow/tfjs": "^4.3.0",
-    "@types/colormap": "^2.3.1",
-    "@types/d3": "^7.4.0",
-    "colormap": "^2.3.2",
-    "d3": "^7.8.2"
+    "colormap": "^2.3.2"
   },
   "devDependencies": {
+    "@types/colormap": "^2.3.1",
+    "@types/d3": "^7.4.0",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react-swc": "^3.0.0",
