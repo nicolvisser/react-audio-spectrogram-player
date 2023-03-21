@@ -1,4 +1,4 @@
-import SpectrogramSurfer from "./lib/SpectrogramSurfer";
+import SpectrogramPlayer from "./lib/SpectrogramPlayer";
 
 import sxx_0 from "./assets/19-198-0001.json";
 import sxx_1 from "./assets/26-495-0001.json";
@@ -32,7 +32,7 @@ function App() {
     <div>
       {data.map(({ key, sxx, src }) => (
         <div key={key} style={{ marginTop: 40, marginLeft: 'auto', marginRight: 'auto', width: '90vw' }}>
-          <SpectrogramSurfer
+          <SpectrogramPlayer
             src={src}
             sxx={sxx}
             specHeight={200}

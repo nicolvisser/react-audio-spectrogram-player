@@ -1,3 +1,3 @@
-import SpectrogramSurfer from "./SpectrogramSurfer";
+import SpectrogramPlayer from "./SpectrogramPlayer";
 
-export default SpectrogramSurfer
+export default SpectrogramPlayer

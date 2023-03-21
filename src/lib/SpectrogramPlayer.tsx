@@ -11,7 +11,7 @@ const darkTheme = createTheme({
 import SpectrogramGraphics from './SpectrogramGraphics';
 import PlaybackProvider from "./PlaybackProvider";
 
-interface SpectrogramSurferProps {
+interface SpectrogramPlayerProps {
     sxx: number[][]
     src: string
     specHeight: number
@@ -23,7 +23,7 @@ interface SpectrogramSurferProps {
     dark?: boolean
 }
 
-const SpectrogramSurfer = (props: SpectrogramSurferProps) => {
+const SpectrogramPlayer = (props: SpectrogramPlayerProps) => {
     const { sxx, src, specHeight, navHeight } = props
     const navigator = props.navigator ? true : false
     const settings = props.settings ? true : false
@@ -49,4 +49,4 @@ const SpectrogramSurfer = (props: SpectrogramSurferProps) => {
     )
 }
 
-export default SpectrogramSurfer
+export default SpectrogramPlayer
