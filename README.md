@@ -21,7 +21,7 @@ npm i react-audio-spectrogram-player
 ### Basic Usage
 
 ```js
-import SpectrogramSurfer from "react-audio-spectrogram-player";
+import SpectrogramPlayer from "react-audio-spectrogram-player";
 
 ...
 
@@ -32,7 +32,7 @@ const App = () => {
     const sxx = ... // number[][]: 2D array with spectrogram values
 
     return (
-        <SpectrogramSurfer
+        <SpectrogramPlayer
             src={src}
             sxx={sxx}
             specHeight={200}
@@ -46,7 +46,7 @@ const App = () => {
 
 ```jsx
 return (
-    <SpectrogramSurfer
+    <SpectrogramPlayer
         src={src}
         sxx={sxx}
         specHeight={200}

@@ -7,7 +7,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(__dirname, 'src/lib/index.tsx'),
-      name: 'SpectrogramSurfer',
+      name: 'SpectrogramPlayer',
       fileName: (format) => `react-audio-spectrogram-player.${format}.js`
     },
     rollupOptions: {
