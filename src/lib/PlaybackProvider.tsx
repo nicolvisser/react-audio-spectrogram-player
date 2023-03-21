@@ -88,6 +88,14 @@ function PlaybackProvider(props: PlaybackProviderProps) {
         }
     }
 
+    const onRateChange = (e: React.SyntheticEvent<HTMLAudioElement, Event>) => {
+        if (audioRef.current !== null) {
+            if (audioRef.current.duration) {
+                setPlaybackRate(audioRef.current.playbackRate);
+            }
+        }
+    }
+
     const setCurrentTime = (newTime: number) => {
         if (audioRef.current !== null) {
             audioRef.current.currentTime = newTime
@@ -121,7 +129,7 @@ function PlaybackProvider(props: PlaybackProviderProps) {
         <PlaybackContext.Provider value={{ duration, currentTime, playbackRate, mode, setDuration, setCurrentTime, setPlaybackRate, pause }}>
             {children}
             <Stack spacing={1} direction="row" alignItems='center' >
-                <audio ref={audioRef} controls style={{ marginTop: 7, width: '100%' }} onTimeUpdate={onTimeUpdate} onDurationChange={onDurationChange}>
+                <audio ref={audioRef} controls style={{ marginTop: 7, width: '100%' }} onTimeUpdate={onTimeUpdate} onDurationChange={onDurationChange} onRateChange={onRateChange}>
                     <source src={src} />
                 </audio>
                 {settings && (
@@ -138,7 +146,7 @@ function PlaybackProvider(props: PlaybackProviderProps) {
                         <Slider
                             aria-label="Playback Rate Slider"
                             onChange={handlePlaybackRateChange}
-                            defaultValue={1.0}
+                            value={playbackRate}
                             valueLabelFormat={playbackRateSliderValueText}
                             valueLabelDisplay="auto"
                             marks={playbackRateSliderMarks}
@@ -152,7 +160,7 @@ function PlaybackProvider(props: PlaybackProviderProps) {
                         <FormControl size="small" sx={{ m: 1, width: '100%' }}>
                             <Select
                                 id="mode-select"
-                                defaultValue={"stop"}
+                                value={mode}
                                 onChange={handleModeChange}
                             >
                                 <MenuItem value={"stop"}>Stop</MenuItem>
