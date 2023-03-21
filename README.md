@@ -50,6 +50,7 @@ return (
         sxx={sxx}
         specHeight={200}
         navHeight={50}
+        navigator
         settings
         colormap="viridis"
         transparent
@@ -58,16 +59,17 @@ return (
 )
 ```
 
-|prop|type|description|
-|---|---|---|
-|`src`|`string`|Path to the wav audio file.|
-|`sxx`|`number[][]`|2D array with spectrogram values.|
-|`specHeight`|`number`|Height of the main spectrogram.|
-|`navHeight`|`number`|Height of the spectrogram navigator.|
-|`settings`|`boolean`|Allow user to change some playback behaviour.|
-|`colormap`|`string`|The [colormap](https://www.npmjs.com/package/colormap) to use.|
-|`transparent`|`boolean`|Use rgba values for spectrogram image.|
-|`dark`|`boolean`|Use dark mode theme.|
+|Prop|Type|Default|Description|
+|---|---|---|---|
+|`src`|`string`|required|Path to the wav audio file.|
+|`sxx`|`number[][]`|required|2D array with spectrogram values.|
+|`specHeight`|`number`|required|Height of the main spectrogram.|
+|`navigator`|`boolean`|`false`|Allow user to zoom in with the navigator UI.|
+|`navHeight`|`number`|`0`|Height of the navigator UI.|
+|`settings`|`boolean`|`false`|Allow user to change some playback behaviour.|
+|`colormap`|`string`|`'viridis'`|The [colormap](https://www.npmjs.com/package/colormap) to use.|
+|`transparent`|`boolean`|`false`|Use rgba values for spectrogram image.|
+|`dark`|`boolean`|`false`|Use dark mode theme.|
 
 ## Future Updates
 

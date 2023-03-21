@@ -21,14 +21,15 @@ function min(arr: number[][]) {
 interface SpectrogramGraphicsProps {
     sxx: number[][]
     specHeight: number
-    navHeight: number
     navigator: boolean
+    navHeight?: number
     colormap: string
     transparent: boolean
 }
 
 function SpectrogramGraphics(props: SpectrogramGraphicsProps) {
-    const { sxx, specHeight, navHeight, navigator, colormap, transparent } = props
+    const { sxx, specHeight, navigator, colormap, transparent } = props
+    const navHeight = props.navHeight ? props.navHeight : 0
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const [dataURL, setDataURL] = useState<string>("")
     const { duration } = usePlayback()

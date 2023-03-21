@@ -15,8 +15,8 @@ interface SpectrogramPlayerProps {
     sxx: number[][]
     src: string
     specHeight: number
-    navHeight: number
     navigator?: boolean
+    navHeight?: number
     settings?: boolean
     colormap?: string
     transparent?: boolean
