@@ -1,5 +1,5 @@
 {
-  "name": "react-spectrogramsurfer",
+  "name": "react-audio-spectrogram-player",
   "version": "0.0.0",
   "description": "An audioplayer written in React that shows a spectrogram along with the audio.",
   "license": "MIT",
@@ -17,12 +17,12 @@
     "README.md"
   ],
   "type": "module",
-  "main": "./dist/react-spectrogramsurfer.umd.js",
-  "module": "./dist/react-spectrogramsurfer.es.js",
+  "main": "./dist/react-audio-spectrogram-player.umd.js",
+  "module": "./dist/react-audio-spectrogram-player.es.js",
   "exports": {
     ".": {
-      "import": "./dist/react-spectrogramsurfer.es.js",
-      "require": "./dist/react-spectrogramsurfer.umd.js"
+      "import": "./dist/react-audio-spectrogram-player.es.js",
+      "require": "./dist/react-audio-spectrogram-player.umd.js"
     }
   },
   "scripts": {

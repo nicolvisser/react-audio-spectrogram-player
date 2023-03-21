@@ -7,7 +7,7 @@ export default defineConfig({
     lib: {
       entry: path.resolve(__dirname, 'src/lib/index.jsx'),
       name: 'SpectrogramSurfer',
-      fileName: (format) => `react-spectrogramsurfer.${format}.js`
+      fileName: (format) => `react-audio-spectrogram-player.${format}.js`
     },
     rollupOptions: {
       external: ['react', 'react-dom'],

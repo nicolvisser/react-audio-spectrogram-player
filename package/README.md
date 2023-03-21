@@ -1,4 +1,4 @@
-# react-spectrogramsurfer
+# react-audio-spectrogram-player
 
 An audioplayer written in React that shows a spectrogram along with the audio. The playhead on the spectrogram is synchronized with the audioplayer. You can zoom in on the spectrogram and slow down the audio. It acts almost as a microscope for audio.
 
