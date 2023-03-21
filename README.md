@@ -46,7 +46,7 @@ const App = () => {
 ```jsx
 return (
     <SpectrogramSurfer
-        src={}
+        src={src}
         sxx={sxx}
         specHeight={200}
         navHeight={50}
