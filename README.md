@@ -4,8 +4,9 @@ An audioplayer written in React that shows a spectrogram along with the audio. T
 
 Note: At the moment, you still need to compute the spectrogram yourself and pass it to the component via the `src` prop.
 
-
 ## Preview
+
+See the [demo](https://react-audio-spectrogram-player.netlify.app/).
 
 ![preview](./preview.png)
 
