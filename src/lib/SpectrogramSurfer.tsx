@@ -1,5 +1,4 @@
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 
 const defaultTheme = createTheme();
 
@@ -34,7 +33,6 @@ const SpectrogramSurfer = (props: SpectrogramSurferProps) => {
 
     return (
         <ThemeProvider theme={dark ? darkTheme : defaultTheme}>
-            <CssBaseline />
             <div style={{ width: '100%' }}>
                 <PlaybackProvider src={src} settings={settings}>
                     <SpectrogramGraphics

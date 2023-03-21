@@ -40,8 +40,6 @@ function App() {
             navigator
             settings
             colormap="viridis"
-            transparent
-            dark
           />
         </div >
       ))}
