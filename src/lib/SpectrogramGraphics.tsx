@@ -4,11 +4,8 @@ import createColorMap from 'colormap';
 import SpectrogramViewer from './SpectrogramViewer';
 import SpectrogramNavigator from './SpectrogramNavigator';
 import SpectrogramContent from './SpectrogramContent';
-import ZoomProvider from '../context/ZoomProvider';
-import { usePlayback } from '../context/PlaybackProvider';
-import { Stack } from '@mui/system';
-import { ZoomIn, ZoomOut } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
+import ZoomProvider from './ZoomProvider';
+import { usePlayback } from './PlaybackProvider';
 
 interface SpectrogramGraphicsProps {
     sxx: number[][]

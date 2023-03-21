@@ -10,7 +10,7 @@ const darkTheme = createTheme({
 });
 
 import SpectrogramGraphics from './SpectrogramGraphics';
-import PlaybackProvider from "../context/PlaybackProvider";
+import PlaybackProvider from "./PlaybackProvider";
 
 interface SpectrogramSurferProps {
     sxx: number[][]

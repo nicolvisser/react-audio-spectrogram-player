@@ -1,9 +1,9 @@
 import { ZoomIn, ZoomOut } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import { Stack } from "@mui/system";
-import { TouchEventHandler, useRef, useState } from "react";
-import { usePlayback } from "../context/PlaybackProvider";
-import { useZoom } from "../context/ZoomProvider";
+import { useRef, useState } from "react";
+import { usePlayback } from "./PlaybackProvider";
+import { useZoom } from "./ZoomProvider";
 
 interface SpectrogramNavigatorProps {
     children: JSX.Element

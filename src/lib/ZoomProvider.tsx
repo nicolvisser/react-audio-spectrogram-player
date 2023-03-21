@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, useRef, useContext, SetStateAction, Dispatch } from 'react';
+import { createContext, useState, useEffect, useContext, SetStateAction, Dispatch } from 'react';
 import { usePlayback } from "./PlaybackProvider";
 
 export type ZoomContextType = {

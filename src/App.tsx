@@ -1,4 +1,4 @@
-import SpectrogramSurfer from "./components/SpectrogramSurfer";
+import SpectrogramSurfer from "./lib/SpectrogramSurfer";
 
 import sxx_0 from "./assets/19-198-0001.json";
 import sxx_1 from "./assets/26-495-0001.json";
