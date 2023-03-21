@@ -22,12 +22,13 @@ interface SpectrogramGraphicsProps {
     sxx: number[][]
     specHeight: number
     navHeight: number
+    navigator: boolean
     colormap: string
     transparent: boolean
 }
 
 function SpectrogramGraphics(props: SpectrogramGraphicsProps) {
-    const { sxx, specHeight, navHeight, colormap, transparent } = props
+    const { sxx, specHeight, navHeight, navigator, colormap, transparent } = props
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const [dataURL, setDataURL] = useState<string>("")
     const { duration } = usePlayback()
@@ -74,13 +75,16 @@ function SpectrogramGraphics(props: SpectrogramGraphicsProps) {
         <>
             <canvas hidden ref={canvasRef} height={sxx.length} width={sxx[0].length} />
             <ZoomProvider>
-                <SpectrogramViewer height={specHeight}>
-                    {spectrogramContent}
-                </SpectrogramViewer>
-                <br />
-                <SpectrogramNavigator height={navHeight} >
-                    {spectrogramContent}
-                </SpectrogramNavigator>
+                <>
+                    <SpectrogramViewer height={specHeight}>
+                        {spectrogramContent}
+                    </SpectrogramViewer>
+                    {navigator && (
+                        <SpectrogramNavigator height={navHeight} >
+                            {spectrogramContent}
+                        </SpectrogramNavigator>
+                    )}
+                </>
             </ZoomProvider>
         </>
     )

@@ -17,17 +17,19 @@ interface SpectrogramSurferProps {
     src: string
     specHeight: number
     navHeight: number
+    navigator?: boolean
+    settings?: boolean
     colormap?: string
     transparent?: boolean
-    settings?: boolean
     dark?: boolean
 }
 
 const SpectrogramSurfer = (props: SpectrogramSurferProps) => {
     const { sxx, src, specHeight, navHeight } = props
+    const navigator = props.navigator ? true : false
+    const settings = props.settings ? true : false
     const colormap = props.colormap ? props.colormap : 'viridis'
     const transparent = props.transparent ? true : false
-    const settings = props.settings ? true : false
     const dark = props.dark ? true : false
 
     return (
@@ -35,7 +37,14 @@ const SpectrogramSurfer = (props: SpectrogramSurferProps) => {
             <CssBaseline />
             <div style={{ width: '100%' }}>
                 <PlaybackProvider src={src} settings={settings}>
-                    <SpectrogramGraphics sxx={sxx} specHeight={specHeight} navHeight={navHeight} colormap={colormap} transparent={transparent} />
+                    <SpectrogramGraphics
+                        sxx={sxx}
+                        specHeight={specHeight}
+                        navHeight={navHeight}
+                        colormap={colormap}
+                        transparent={transparent}
+                        navigator={navigator}
+                    />
                 </PlaybackProvider>
             </div >
         </ThemeProvider>

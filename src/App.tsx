@@ -33,14 +33,15 @@ function App() {
       {data.map(({ key, sxx, src }) => (
         <div key={key} style={{ marginTop: 40, marginLeft: 'auto', marginRight: 'auto', width: '90vw' }}>
           <SpectrogramSurfer
-            sxx={sxx}
             src={src}
+            sxx={sxx}
             specHeight={200}
             navHeight={50}
-            colormap="viridis"
-            transparent={false}
+            navigator
             settings
-            dark={true}
+            colormap="viridis"
+            transparent
+            dark
           />
         </div >
       ))}
