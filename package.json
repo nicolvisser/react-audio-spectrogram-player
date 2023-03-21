@@ -61,5 +61,9 @@
     "typescript": "^4.9.3",
     "vite": "^4.2.0",
     "vite-plugin-dts": "^2.1.0"
+  },
+  "repository": "github:nicolvisser/react-audio-spectrogram-player",
+  "bugs": {
+    "url": "https://github.com/nicolvisser/react-audio-spectrogram-player/issues"
   }
 }
