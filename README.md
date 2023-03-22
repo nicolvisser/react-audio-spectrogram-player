@@ -75,4 +75,5 @@ return (
 ## Future Updates
 
 - Calculate spectrogram with javascript when no `sxx` prop is supplied.
-- Touch screen compatibility.
+- Better touch screen compatibility.
+- Develop Jupyter widget using this component.
