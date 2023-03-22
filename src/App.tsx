@@ -1,3 +1,5 @@
+import './App.css'
+
 import SpectrogramPlayer from "./lib/SpectrogramPlayer";
 
 import sxx_0 from "./assets/19-198-0001.json";

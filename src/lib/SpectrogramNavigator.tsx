@@ -1,6 +1,3 @@
-import { ZoomIn, ZoomOut } from "@mui/icons-material";
-import { IconButton } from "@mui/material";
-import { Stack } from "@mui/system";
 import { useRef, useState } from "react";
 import { usePlayback } from "./PlaybackProvider";
 import { useZoom } from "./ZoomProvider";
@@ -68,23 +65,16 @@ function SpectrogramNavigator(props: SpectrogramNavigatorProps) {
     }
 
     return (
-        <>
-            <Stack spacing={1} direction='row' alignItems='center'>
-                <IconButton onClick={zoomOut}>
-                    <ZoomOut />
-                </IconButton>
-                <svg ref={svgRef} width="100%" height={height} viewBox={`0,0,${duration},100`} cursor={isZoomed ? "grabbing" : "zoom-in"} preserveAspectRatio="none" onPointerDown={onPointerDown} onPointerUp={onPointerUp} onPointerMove={onPointerMove} >
-                    {children}
-                    <rect x={0} width={startTime} y="0" height="100" style={{ fill: 'white', opacity: 0.5 }} />
-                    <rect x={endTime} width={100 - endTime} y="0" height="100" style={{ fill: 'white', opacity: 0.5 }} />
-                    {draggingToZoom && dragEnd > dragStart && <rect x={dragStart} width={dragEnd - dragStart} y="0" height="100" style={{ fill: 'red', opacity: 0.5 }} />}
-                </svg>
-                <IconButton onClick={zoomIn}>
-                    <ZoomIn />
-                </IconButton>
-            </Stack>
-        </>
-
+        <div style={{ display: "flex", flexDirection: "row", gap: 5 }}>
+            <button style={{ fontFamily: "monospace" }} onClick={zoomOut}>Zoom Out</button>
+            <svg ref={svgRef} width="100%" height={height} viewBox={`0,0,${duration},100`} cursor={isZoomed ? "grabbing" : "zoom-in"} preserveAspectRatio="none" onPointerDown={onPointerDown} onPointerUp={onPointerUp} onPointerMove={onPointerMove} >
+                {children}
+                <rect x={0} width={startTime} y="0" height="100" style={{ fill: 'white', opacity: 0.5 }} />
+                <rect x={endTime} width={100 - endTime} y="0" height="100" style={{ fill: 'white', opacity: 0.5 }} />
+                {draggingToZoom && dragEnd > dragStart && <rect x={dragStart} width={dragEnd - dragStart} y="0" height="100" style={{ fill: 'red', opacity: 0.5 }} />}
+            </svg>
+            <button style={{ fontFamily: "monospace" }} onClick={zoomIn}>Zoom In</button>
+        </div>
     )
 }
 

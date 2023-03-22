@@ -1,6 +1,5 @@
-import { Speed, Tune, } from '@mui/icons-material';
-import { Fab, FormControl, FormHelperText, MenuItem, Select, SelectChangeEvent, Slider, Stack, Typography } from '@mui/material';
 import { createContext, useState, useEffect, useRef, useContext, SetStateAction, Dispatch } from 'react';
+import './PlaybackProvider.css'
 
 export type PlaybackContextType = {
     duration: number
@@ -56,7 +55,7 @@ function PlaybackProvider(props: PlaybackProviderProps) {
     const [duration, setDuration] = useState(1)
     const [currentTime, _setCurrentTime] = useState(0)
     const [playbackRate, _setPlaybackRate] = useState(1.0)
-    const [mode, setMode] = useState<string>("stop")
+    const [mode, setMode] = useState<string>("page")
     const audioRef = useRef<HTMLAudioElement>(null)
     const [showSettingsPanel, setShowSettingsPanel] = useState(false)
 
@@ -110,15 +109,6 @@ function PlaybackProvider(props: PlaybackProviderProps) {
         _setPlaybackRate(newRate)
     }
 
-    const handlePlaybackRateChange = (event: Event, value: number | number[], activeThumb: number) => {
-        if (typeof value === "number")
-            setPlaybackRate(value)
-    }
-
-    const handleModeChange = (event: SelectChangeEvent<any>, child: React.ReactNode) => {
-        setMode(event.target.value as string)
-    }
-
     const pause = () => {
         if (audioRef.current !== null) {
             audioRef.current.pause()
@@ -128,51 +118,32 @@ function PlaybackProvider(props: PlaybackProviderProps) {
     return (
         <PlaybackContext.Provider value={{ duration, currentTime, playbackRate, mode, setDuration, setCurrentTime, setPlaybackRate, pause }}>
             {children}
-            <Stack spacing={1} direction="row" alignItems='center' >
-                <audio ref={audioRef} controls style={{ marginTop: 7, width: '100%' }} onTimeUpdate={onTimeUpdate} onDurationChange={onDurationChange} onRateChange={onRateChange}>
-                    <source src={src} />
-                </audio>
-                {settings && (
-                    <Fab variant="circular" size="small" color="primary" onClick={() => { setShowSettingsPanel(!showSettingsPanel) }}>
-                        <Tune />
-                    </Fab>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "stretch", gap: 5, marginTop: 5, }}>
+                <div style={{ width: "100%", display: "flex", flexDirection: "row", alignItems: "stretch", gap: 5 }}>
+                    <audio ref={audioRef} controls style={{ width: '100%' }} onTimeUpdate={onTimeUpdate} onDurationChange={onDurationChange} onRateChange={onRateChange}>
+                        <source src={src} />
+                    </audio>
+                    <button style={{ fontFamily: "monospace" }} onClick={() => { setShowSettingsPanel(!showSettingsPanel) }}>Settings</button>
+                </div>
+                {settings && showSettingsPanel && (
+                    <div style={{ display: "grid", flexDirection: "row", fontFamily: "monospace", gridTemplateColumns: "1fr 3fr", columnGap: 5, rowGap: 5 }}>
+                        <div style={{ backgroundColor: "#cccccc", padding: 5 }} >{"Playback Speed"}</div>
+                        <div style={{ display: "flex", flexDirection: "row", "gap": 5 }}>
+                            <div className="slidecontainer">
+                                <div style={{ padding: 5 }} >{`${playbackRate.toFixed(1)}x`}</div>
+                                <input type="range" min="0.1" max="2.0" defaultValue="1.0" className="slider" id="myRange" step="0.1" onChange={(e) => { setPlaybackRate(Number(e.target.value)) }} />
+                            </div>
+                        </div>
+                        <div style={{ backgroundColor: "#cccccc", padding: 5 }} >{"Playhead Mode"}</div>
+                        <div style={{ backgroundColor: "#eeeeee", display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gridTemplateRows: "1fr" }}>
+                            <div onClick={() => { setMode("page") }} style={{ padding: 5, textAlign: "center", cursor: "pointer", backgroundColor: mode === "page" ? "#cccccc" : "#eeeeee" }}>Page</div>
+                            <div onClick={() => { setMode("stop") }} style={{ padding: 5, textAlign: "center", cursor: "pointer", backgroundColor: mode === "stop" ? "#cccccc" : "#eeeeee" }}>Stop</div>
+                            <div onClick={() => { setMode("loop") }} style={{ padding: 5, textAlign: "center", cursor: "pointer", backgroundColor: mode === "loop" ? "#cccccc" : "#eeeeee" }}>Loop</div>
+                            <div onClick={() => { setMode("continue") }} style={{ padding: 5, textAlign: "center", cursor: "pointer", backgroundColor: mode === "continue" ? "#cccccc" : "#eeeeee" }}>Continue</div>
+                        </div>
+                    </div>
                 )}
-            </Stack>
-            {settings && (
-                <Stack direction="column" sx={{ mt: 2, display: showSettingsPanel ? 'block' : 'none' }}>
-                    <Stack spacing={2} direction="row" alignItems="center">
-                        <Speed color='primary' />
-                        <Typography variant="caption">Playback Speed</Typography>
-                        <Slider
-                            aria-label="Playback Rate Slider"
-                            onChange={handlePlaybackRateChange}
-                            value={playbackRate}
-                            valueLabelFormat={playbackRateSliderValueText}
-                            valueLabelDisplay="auto"
-                            marks={playbackRateSliderMarks}
-                            min={0.1}
-                            step={0.1}
-                            max={2.0} />
-                    </Stack>
-                    <Stack spacing={2} direction="row" alignItems="center">
-                        <Tune color='primary' />
-                        <Typography variant="caption">Playhead mode</Typography>
-                        <FormControl size="small" sx={{ m: 1, width: '100%' }}>
-                            <Select
-                                id="mode-select"
-                                value={mode}
-                                onChange={handleModeChange}
-                            >
-                                <MenuItem value={"stop"}>Stop</MenuItem>
-                                <MenuItem value={"loop"}>Loop</MenuItem>
-                                <MenuItem value={"continue"}>Continue</MenuItem>
-                                <MenuItem value={"page"}>Page</MenuItem>
-                            </Select>
-                            <FormHelperText>What happens when playhead reaches end of window.</FormHelperText>
-                        </FormControl>
-                    </Stack>
-                </Stack>
-            )}
+            </div>
         </PlaybackContext.Provider >
     )
 };
