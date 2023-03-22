@@ -1,5 +1,7 @@
 import SpectrogramGraphics from './SpectrogramGraphics';
 import PlaybackProvider from "./PlaybackProvider";
+import ThemeProvider from './ThemeProvider';
+import './SpectrogramPlayer.css'
 
 interface SpectrogramPlayerProps {
     sxx: number[][]
@@ -23,16 +25,18 @@ const SpectrogramPlayer = (props: SpectrogramPlayerProps) => {
 
     return (
         <div style={{ width: '100%' }}>
-            <PlaybackProvider src={src} settings={settings}>
-                <SpectrogramGraphics
-                    sxx={sxx}
-                    specHeight={specHeight}
-                    navHeight={navHeight}
-                    colormap={colormap}
-                    transparent={transparent}
-                    navigator={navigator}
-                />
-            </PlaybackProvider>
+            <ThemeProvider dark={dark}>
+                <PlaybackProvider src={src} settings={settings}>
+                    <SpectrogramGraphics
+                        sxx={sxx}
+                        specHeight={specHeight}
+                        navHeight={navHeight}
+                        colormap={colormap}
+                        transparent={transparent}
+                        navigator={navigator}
+                    />
+                </PlaybackProvider>
+            </ThemeProvider>
         </div >
     )
 }

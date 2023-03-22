@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { usePlayback } from "./PlaybackProvider";
+import { useTheme } from "./ThemeProvider";
 import { useZoom } from "./ZoomProvider";
 
 interface SpectrogramNavigatorProps {
@@ -16,6 +17,8 @@ function SpectrogramNavigator(props: SpectrogramNavigatorProps) {
     const svgRef = useRef<SVGSVGElement>(null);
     const [dragStart, setDragStart] = useState<number | null>(null)
     const [dragEnd, setDragEnd] = useState<number | null>(null)
+    const { dark } = useTheme()
+    const theme = dark ? "dark" : "light"
 
     const draggingToZoom = (!isZoomed) && dragStart && dragEnd
     const draggingToPan = isZoomed && dragStart
@@ -66,14 +69,14 @@ function SpectrogramNavigator(props: SpectrogramNavigatorProps) {
 
     return (
         <div style={{ display: "flex", flexDirection: "row", gap: 5 }}>
-            <button style={{ fontFamily: "monospace" }} onClick={zoomOut}>Zoom Out</button>
+            <button className={theme} onClick={zoomOut}>Zoom Out</button>
             <svg ref={svgRef} width="100%" height={height} viewBox={`0,0,${duration},100`} cursor={isZoomed ? "grabbing" : "zoom-in"} preserveAspectRatio="none" onPointerDown={onPointerDown} onPointerUp={onPointerUp} onPointerMove={onPointerMove} >
                 {children}
                 <rect x={0} width={startTime} y="0" height="100" style={{ fill: 'white', opacity: 0.5 }} />
                 <rect x={endTime} width={100 - endTime} y="0" height="100" style={{ fill: 'white', opacity: 0.5 }} />
                 {draggingToZoom && dragEnd > dragStart && <rect x={dragStart} width={dragEnd - dragStart} y="0" height="100" style={{ fill: 'red', opacity: 0.5 }} />}
             </svg>
-            <button style={{ fontFamily: "monospace" }} onClick={zoomIn}>Zoom In</button>
+            <button className={theme} style={{ fontFamily: "monospace" }} onClick={zoomIn}>Zoom In</button>
         </div>
     )
 }

@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useRef, useContext, SetStateAction, Dispatch } from 'react';
-import './PlaybackProvider.css'
+import { useTheme } from './ThemeProvider';
 
 export type PlaybackContextType = {
     duration: number
@@ -58,6 +58,9 @@ function PlaybackProvider(props: PlaybackProviderProps) {
     const [mode, setMode] = useState<string>("page")
     const audioRef = useRef<HTMLAudioElement>(null)
     const [showSettingsPanel, setShowSettingsPanel] = useState(false)
+    const { dark } = useTheme()
+
+    const theme = dark ? "dark" : "light"
 
 
     useEffect(() => {
@@ -120,26 +123,26 @@ function PlaybackProvider(props: PlaybackProviderProps) {
             {children}
             <div style={{ display: "flex", flexDirection: "column", alignItems: "stretch", gap: 5, marginTop: 5, }}>
                 <div style={{ width: "100%", display: "flex", flexDirection: "row", alignItems: "stretch", gap: 5 }}>
-                    <audio ref={audioRef} controls style={{ width: '100%' }} onTimeUpdate={onTimeUpdate} onDurationChange={onDurationChange} onRateChange={onRateChange}>
+                    <audio ref={audioRef} controls style={{ width: '100%' }} onTimeUpdate={onTimeUpdate} onDurationChange={onDurationChange} onRateChange={onRateChange} controlsList="nodownload">
                         <source src={src} />
                     </audio>
-                    <button style={{ fontFamily: "monospace" }} onClick={() => { setShowSettingsPanel(!showSettingsPanel) }}>Settings</button>
+                    <button className={theme} onClick={() => { setShowSettingsPanel(!showSettingsPanel) }}>Settings</button>
                 </div>
                 {settings && showSettingsPanel && (
                     <div style={{ display: "grid", flexDirection: "row", fontFamily: "monospace", gridTemplateColumns: "1fr 3fr", columnGap: 5, rowGap: 5 }}>
-                        <div style={{ backgroundColor: "#cccccc", padding: 5 }} >{"Playback Speed"}</div>
+                        <div className={`gridcell header ${theme}`}>{"Playback Speed"}</div>
                         <div style={{ display: "flex", flexDirection: "row", "gap": 5 }}>
-                            <div className="slidecontainer">
-                                <div style={{ padding: 5 }} >{`${playbackRate.toFixed(1)}x`}</div>
-                                <input type="range" min="0.1" max="2.0" defaultValue="1.0" className="slider" id="myRange" step="0.1" onChange={(e) => { setPlaybackRate(Number(e.target.value)) }} />
+                            <div className={`slidecontainer ${theme}`}>
+                                <div className={`slidervalue ${theme}`} >{`${playbackRate.toFixed(1)}x`}</div>
+                                <input type="range" min="0.1" max="2.0" defaultValue="1.0" className={`slider ${theme}`} id="myRange" step="0.1" onChange={(e) => { setPlaybackRate(Number(e.target.value)) }} />
                             </div>
                         </div>
-                        <div style={{ backgroundColor: "#cccccc", padding: 5 }} >{"Playhead Mode"}</div>
-                        <div style={{ backgroundColor: "#eeeeee", display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gridTemplateRows: "1fr" }}>
-                            <div onClick={() => { setMode("page") }} style={{ padding: 5, textAlign: "center", cursor: "pointer", backgroundColor: mode === "page" ? "#cccccc" : "#eeeeee" }}>Page</div>
-                            <div onClick={() => { setMode("stop") }} style={{ padding: 5, textAlign: "center", cursor: "pointer", backgroundColor: mode === "stop" ? "#cccccc" : "#eeeeee" }}>Stop</div>
-                            <div onClick={() => { setMode("loop") }} style={{ padding: 5, textAlign: "center", cursor: "pointer", backgroundColor: mode === "loop" ? "#cccccc" : "#eeeeee" }}>Loop</div>
-                            <div onClick={() => { setMode("continue") }} style={{ padding: 5, textAlign: "center", cursor: "pointer", backgroundColor: mode === "continue" ? "#cccccc" : "#eeeeee" }}>Continue</div>
+                        <div className={`gridcell header ${theme}`} >{"Playhead Mode"}</div>
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gridTemplateRows: "1fr" }}>
+                            <div className={`gridcell ${theme} ${mode === "page" && "selected"}`} onClick={() => { setMode("page") }} >Page</div>
+                            <div className={`gridcell ${theme} ${mode === "stop" && "selected"}`} onClick={() => { setMode("stop") }} >Stop</div>
+                            <div className={`gridcell ${theme} ${mode === "loop" && "selected"}`} onClick={() => { setMode("loop") }} >Loop</div>
+                            <div className={`gridcell ${theme} ${mode === "continue" && "selected"}`} onClick={() => { setMode("continue") }} >Continue</div>
                         </div>
                     </div>
                 )}

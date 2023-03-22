@@ -1,0 +1,140 @@
+button {
+  all: unset;
+  border-radius: 5px;
+  font-family: monospace;
+  text-align: center;
+  padding: 5px;
+  cursor: pointer;
+}
+
+button.light {
+  background-color: #00000011;
+  color: black;
+}
+
+button.light:hover {
+  background-color: #00000033;
+}
+
+button.dark {
+  background-color: #ffffff22;
+  color: white;
+}
+
+button.dark:hover {
+  background-color: #ffffff33;
+}
+
+.gridcell {
+  padding: 5px;
+  text-align: center;
+}
+
+.gridcell:not(.header) {
+  cursor: pointer;
+}
+
+.gridcell.light {
+  background-color: #00000011;
+  color: black;
+}
+
+.gridcell.header.light {
+  background-color: #00000033;
+}
+
+.gridcell.light:not(.header):not(.selected):hover {
+  background-color: #00000022;
+}
+
+.gridcell.light.selected {
+  background-color: #00000033;
+}
+
+.gridcell.dark {
+  background-color: #ffffff11;
+  color: white;
+}
+
+.gridcell.header.dark {
+  background-color: #ffffff33;
+}
+
+.gridcell.dark:not(.header):not(.selected):hover {
+  background-color: #ffffff22;
+}
+
+.gridcell.dark.selected {
+  background-color: #ffffff33;
+}
+
+.slidecontainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.slidervalue {
+  padding: 5px
+}
+
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 25px;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+
+.slidervalue.light {
+  color: black;
+}
+
+.slider.light {
+  background: #00000011;
+}
+
+.slider.light::-webkit-slider-thumb {
+  background: #00000044;
+}
+
+.slider.light::-moz-range-thumb {
+  background: #00000044;
+}
+
+.slidervalue.dark {
+  color: white;
+}
+
+.slider.dark {
+  background: #ffffff11;
+}
+
+.slider.dark::-webkit-slider-thumb {
+  background: #ffffff44;
+}
+
+.slider.dark::-moz-range-thumb {
+  background: #ffffff44;
+}
