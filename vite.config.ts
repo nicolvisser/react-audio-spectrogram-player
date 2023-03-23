@@ -2,6 +2,7 @@ import path from 'path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import dts from 'vite-plugin-dts'
+import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 
 export default defineConfig({
   build: {
@@ -19,5 +20,5 @@ export default defineConfig({
       }
     }
   },
-  plugins: [react(), dts()]
+  plugins: [react(), dts(), cssInjectedByJsPlugin()]
 })

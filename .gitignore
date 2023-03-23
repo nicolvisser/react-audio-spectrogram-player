@@ -5,4 +5,6 @@ dist
 stats.html
 .eslintcache
 .DS_Store
+
+*.tgz
 package
