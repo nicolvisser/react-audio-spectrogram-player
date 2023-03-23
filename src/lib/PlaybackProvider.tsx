@@ -126,7 +126,9 @@ function PlaybackProvider(props: PlaybackProviderProps) {
                     <audio ref={audioRef} controls style={{ width: '100%' }} onTimeUpdate={onTimeUpdate} onDurationChange={onDurationChange} onRateChange={onRateChange} controlsList="nodownload">
                         <source src={src} />
                     </audio>
-                    <button className={theme} onClick={() => { setShowSettingsPanel(!showSettingsPanel) }}>Settings</button>
+                    {settings && (
+                        <button className={theme} onClick={() => { setShowSettingsPanel(!showSettingsPanel) }}>Settings</button>
+                    )}
                 </div>
                 {settings && showSettingsPanel && (
                     <div style={{ display: "grid", flexDirection: "row", fontFamily: "monospace", gridTemplateColumns: "1fr 3fr", columnGap: 5, rowGap: 5 }}>
@@ -134,7 +136,7 @@ function PlaybackProvider(props: PlaybackProviderProps) {
                         <div style={{ display: "flex", flexDirection: "row", "gap": 5 }}>
                             <div className={`slidecontainer ${theme}`}>
                                 <div className={`slidervalue ${theme}`} >{`${playbackRate.toFixed(1)}x`}</div>
-                                <input type="range" min="0.1" max="2.0" defaultValue="1.0" className={`slider ${theme}`} id="myRange" step="0.1" onChange={(e) => { setPlaybackRate(Number(e.target.value)) }} />
+                                <input type="range" min="0.1" max="2.0" value={playbackRate} className={`slider ${theme}`} id="myRange" step="0.1" onChange={(e) => { setPlaybackRate(Number(e.target.value)) }} />
                             </div>
                         </div>
                         <div className={`gridcell header ${theme}`} >{"Playhead Mode"}</div>
