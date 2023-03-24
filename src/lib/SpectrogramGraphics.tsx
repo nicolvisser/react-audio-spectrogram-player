@@ -5,6 +5,7 @@ import SpectrogramNavigator from './SpectrogramNavigator';
 import SpectrogramContent from './SpectrogramContent';
 import ZoomProvider from './ZoomProvider';
 import { usePlayback } from './PlaybackProvider';
+import SpectrogramAnnotations from './SpectogramAnnotations'
 
 function max(arr: number[][]) {
     var maxRow = arr.map(function (row) { return Math.max.apply(Math, row); });
@@ -20,6 +21,7 @@ function min(arr: number[][]) {
 
 interface SpectrogramGraphicsProps {
     sxx: number[][]
+    annotations?: string[][] | null
     specHeight: number
     navigator: boolean
     navHeight?: number
@@ -28,7 +30,7 @@ interface SpectrogramGraphicsProps {
 }
 
 function SpectrogramGraphics(props: SpectrogramGraphicsProps) {
-    const { sxx, specHeight, navigator, colormap, transparent } = props
+    const { sxx, annotations, specHeight, navigator, colormap, transparent } = props
     const navHeight = props.navHeight ? props.navHeight : 0
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const [dataURL, setDataURL] = useState<string>("")
@@ -80,6 +82,9 @@ function SpectrogramGraphics(props: SpectrogramGraphicsProps) {
                     <SpectrogramViewer height={specHeight}>
                         {spectrogramContent}
                     </SpectrogramViewer>
+                    {annotations && (
+                        <SpectrogramAnnotations annotations={annotations} />
+                    )}
                     {navigator && (
                         <SpectrogramNavigator height={navHeight} >
                             {spectrogramContent}

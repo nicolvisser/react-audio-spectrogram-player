@@ -6,6 +6,7 @@ import './SpectrogramPlayer.css'
 interface SpectrogramPlayerProps {
     sxx: number[][]
     src: string
+    annotations?: string[][]
     specHeight: number
     navigator?: boolean
     navHeight?: number
@@ -22,6 +23,7 @@ const SpectrogramPlayer = (props: SpectrogramPlayerProps) => {
     const colormap = props.colormap ? props.colormap : 'viridis'
     const transparent = props.transparent ? true : false
     const dark = props.dark ? true : false
+    const annotations = props.annotations ? props.annotations : null
 
     return (
         <div style={{ width: '100%' }}>
@@ -29,6 +31,7 @@ const SpectrogramPlayer = (props: SpectrogramPlayerProps) => {
                 <PlaybackProvider src={src} settings={settings}>
                     <SpectrogramGraphics
                         sxx={sxx}
+                        annotations={annotations}
                         specHeight={specHeight}
                         navHeight={navHeight}
                         colormap={colormap}
