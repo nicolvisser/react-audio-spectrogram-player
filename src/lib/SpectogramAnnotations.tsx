@@ -8,7 +8,7 @@ const DEFAULT_STROKE_WIDTH = 1
 
 
 interface SpectrogramContentProps {
-    annotations: string[][]
+    annotations: (string | number)[][]
     aspectRatio?: number | undefined
     strokeWidth?: number | undefined
 }
@@ -29,8 +29,8 @@ function SpectrogramAnnotations(props: SpectrogramContentProps) {
     return (
         <svg width="100%" viewBox={`${zoomStartTime},0,${displayRange},${svgHeight}`} preserveAspectRatio="none">
             {annotations.map((annotation) => {
-                const annotationStartTime = Number(annotation[0]) / 100
-                const annotationEndTime = Number(annotation[1]) / 100
+                const annotationStartTime = Number(annotation[0])
+                const annotationEndTime = Number(annotation[1])
                 const annotationDuration = annotationEndTime - annotationStartTime
                 const symbol = annotation[2]
                 return (

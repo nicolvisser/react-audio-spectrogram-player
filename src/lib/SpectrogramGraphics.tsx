@@ -20,8 +20,8 @@ function min(arr: number[][]) {
 
 interface SpectrogramGraphicsProps {
     sxx: number[][]
-    annotations?: string[][] | null
-    annotations2?: string[][] | null
+    annotations?: (string | number)[][] | null
+    annotations2?: (string | number)[][] | null
     specHeight: number
     navigator: boolean
     navHeight?: number

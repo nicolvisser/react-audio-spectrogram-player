@@ -73,7 +73,7 @@ function SpectrogramNavigator(props: SpectrogramNavigatorProps) {
             <svg ref={svgRef} width="100%" height={height} viewBox={`0,0,${duration},100`} cursor={isZoomed ? "grabbing" : "zoom-in"} preserveAspectRatio="none" onPointerDown={onPointerDown} onPointerUp={onPointerUp} onPointerMove={onPointerMove} >
                 {children}
                 <rect x={0} width={startTime} y="0" height="100" style={{ fill: 'white', opacity: 0.5 }} />
-                <rect x={endTime} width={100 - endTime} y="0" height="100" style={{ fill: 'white', opacity: 0.5 }} />
+                <rect x={endTime} width={duration - endTime} y="0" height="100" style={{ fill: 'white', opacity: 0.5 }} />
                 {draggingToZoom && dragEnd > dragStart && <rect x={dragStart} width={dragEnd - dragStart} y="0" height="100" style={{ fill: 'red', opacity: 0.5 }} />}
             </svg>
             <button className={theme} style={{ fontFamily: "monospace" }} onClick={zoomIn}>Zoom In</button>

@@ -6,8 +6,8 @@ import './SpectrogramPlayer.css'
 interface SpectrogramPlayerProps {
     sxx: number[][]
     src: string
-    annotations?: string[][]
-    annotations2?: string[][]
+    annotations?: (string | number)[][]
+    annotations2?: (string | number)[][]
     specHeight: number
     navigator?: boolean
     navHeight?: number
