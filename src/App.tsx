@@ -40,29 +40,28 @@ const data = [
   }
 ]
 
-
-import { useState } from 'react';
-
 function App() {
 
   return (
-    <div style={{ maxWidth: 800, marginTop: 40, marginLeft: 'auto', marginRight: 'auto', width: '90vw' }}>
-      {data.map(({src, sxx, annotations}) => (
+    <div style={{ maxWidth: 600, marginTop: 40, marginLeft: 'auto', marginRight: 'auto', width: '90vw' }}>
+      {data.map(({ src, sxx, annotations }) => (
         <div key={annotations[0][0]}>
           <SpectrogramPlayer
-          src={src}
-          sxx={sxx}
-          annotations={annotations}
-          specHeight={200}
-          navHeight={50}
-          navigator
-          settings
-          colormap="viridis"
-          //darks
-        />
-        <br/>
-        <br/>
-      </div>
+            src={src}
+            sxx={sxx}
+            annotations={annotations}
+            specHeight={200}
+            navHeight={50}
+            navigator
+            settings
+            colormap="viridis"
+            //dark
+            annotationStrokeWidth={1}
+            annotationAspectRatio={0.03}
+          />
+          <br />
+          <br />
+        </div>
       ))
 
       }

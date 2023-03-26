@@ -4,7 +4,6 @@ import SpectrogramViewer from './SpectrogramViewer';
 import SpectrogramNavigator from './SpectrogramNavigator';
 import SpectrogramContent from './SpectrogramContent';
 import ZoomProvider from './ZoomProvider';
-import { usePlayback } from './PlaybackProvider';
 import SpectrogramAnnotations from './SpectogramAnnotations'
 
 function max(arr: number[][]) {
@@ -27,17 +26,17 @@ interface SpectrogramGraphicsProps {
     navHeight?: number
     colormap: string
     transparent: boolean
+    annotationStrokeWidth?: number
+    annotationAspectRatio?: number
 }
 
 function SpectrogramGraphics(props: SpectrogramGraphicsProps) {
     const { sxx, annotations, specHeight, navigator, colormap, transparent } = props
+    const annotationStrokeWidth = props.annotationStrokeWidth ? props.annotationStrokeWidth : undefined
+    const annotationAspectRatio = props.annotationAspectRatio ? props.annotationAspectRatio : undefined
     const navHeight = props.navHeight ? props.navHeight : 0
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const [dataURL, setDataURL] = useState<string>("")
-    const { duration } = usePlayback()
-
-    const startTime = 0.00 // seconds
-    const endTime = 1.00 // seconds
 
     const colors = createColorMap({
         colormap: colormap,
@@ -83,7 +82,7 @@ function SpectrogramGraphics(props: SpectrogramGraphicsProps) {
                         {spectrogramContent}
                     </SpectrogramViewer>
                     {annotations && (
-                        <SpectrogramAnnotations annotations={annotations} />
+                        <SpectrogramAnnotations annotations={annotations} strokeWidth={annotationStrokeWidth} aspectRatio={annotationAspectRatio} />
                     )}
                     {navigator && (
                         <SpectrogramNavigator height={navHeight} >

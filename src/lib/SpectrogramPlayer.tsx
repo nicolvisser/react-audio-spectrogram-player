@@ -14,6 +14,8 @@ interface SpectrogramPlayerProps {
     colormap?: string
     transparent?: boolean
     dark?: boolean
+    annotationStrokeWidth?: number
+    annotationAspectRatio?: number
 }
 
 const SpectrogramPlayer = (props: SpectrogramPlayerProps) => {
@@ -24,6 +26,8 @@ const SpectrogramPlayer = (props: SpectrogramPlayerProps) => {
     const transparent = props.transparent ? true : false
     const dark = props.dark ? true : false
     const annotations = props.annotations ? props.annotations : null
+    const annotationStrokeWidth = props.annotationStrokeWidth ? props.annotationStrokeWidth : undefined
+    const annotationAspectRatio = props.annotationAspectRatio ? props.annotationAspectRatio : undefined
 
     return (
         <div style={{ width: '100%' }}>
@@ -37,6 +41,8 @@ const SpectrogramPlayer = (props: SpectrogramPlayerProps) => {
                         colormap={colormap}
                         transparent={transparent}
                         navigator={navigator}
+                        annotationStrokeWidth={annotationStrokeWidth}
+                        annotationAspectRatio={annotationAspectRatio}
                     />
                 </PlaybackProvider>
             </ThemeProvider>
