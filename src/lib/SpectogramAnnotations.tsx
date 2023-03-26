@@ -14,32 +14,45 @@ function SpectrogramAnnotations(props: SpectrogramContentProps) {
     const { duration } = usePlayback()
     const svgRef = useRef<SVGSVGElement>(null);
 
-    const [svgWidth, setSvgWidth] = useState<SVGLength | undefined>(undefined)
-    const [svgHeight, setSvgHeight] = useState<SVGLength | undefined>(undefined)
-
-    useEffect(() => {
-        if (svgRef.current) {
-            setInterval(() => {
-                setSvgWidth(svgRef.current?.width.baseVal)
-                setSvgWidth(svgRef.current?.height.baseVal)
-            }, 100)
-        }
-
-    }, [svgRef])
-
-    const zoomFactor = (zoomEndTime - zoomStartTime) / duration
+    const displayRange = (zoomEndTime - zoomStartTime)
 
     const aspectRatio = 0.05
 
-    const strokeWidth = 0.005 * zoomFactor
+    const strokeWidth = 1
+    const svgStrokeWidth = strokeWidth / 1000 * displayRange
 
-    const viewBoxHeight = 0.05 * duration * zoomFactor
+    const viewBoxHeight = aspectRatio * displayRange
 
-    const baseFontSize = 0.02 * duration * zoomFactor
-    const fontScale = 1.0
-    const fontSize = baseFontSize * fontScale
+    const fontSize = 15
 
-    const textPosY = viewBoxHeight - fontSize / 2
+    const svgFontSize = fontSize / 500 * displayRange
+
+    const textPosY = viewBoxHeight - svgFontSize / 2
+
+    annotations.map((annotation) => {
+        const start = Number(annotation[0]) / 100
+        const end = Number(annotation[1]) / 100
+
+        return {
+            start,
+            end,
+            duration: end - start,
+            text: annotation[2]
+        }
+
+    }))
+
+    const maxTextLength: Number = annotations.reduce((previousMaxLength: number[], currentAnnotation: string[][]) => {
+
+        const start = Number(currentAnnotation[0])
+        const end = Number(currentAnnotation[1])
+        const text = currentAnnotation[2]
+        const annotationDuration = end - start
+        const textLength = text.length
+
+        return Math.max(previousMaxLength, textLength)
+
+    }, 0)
 
     return (
         <svg ref={svgRef} width="100%" viewBox={`${zoomStartTime},0,${zoomEndTime - zoomStartTime},${viewBoxHeight}`} preserveAspectRatio="none">
@@ -49,9 +62,9 @@ function SpectrogramAnnotations(props: SpectrogramContentProps) {
                 const symbol = annotation[2]
                 return (
                     <Fragment key={annotationStartTime}>
-                        <line stroke="black" strokeWidth={strokeWidth} x1={annotationStartTime} x2={annotationStartTime} y1={0} y2={viewBoxHeight} />
-                        <text fill="black" x={annotationStartTime} y={textPosY} fontSize={fontSize}>&nbsp;{symbol}</text>
-                        <line stroke="black" strokeWidth={strokeWidth} x1={annotationEndTime} x2={annotationEndTime} y1={0} y2={viewBoxHeight} />
+                        <line stroke="black" strokeWidth={svgStrokeWidth} x1={annotationStartTime} x2={annotationStartTime} y1={0} y2={viewBoxHeight} />
+                        <text fill="black" x={annotationStartTime} y={textPosY} fontSize={svgFontSize}>&nbsp;{symbol}</text>
+                        <line stroke="black" strokeWidth={svgStrokeWidth} x1={annotationEndTime} x2={annotationEndTime} y1={0} y2={viewBoxHeight} />
                     </Fragment>
                 )
             })}
