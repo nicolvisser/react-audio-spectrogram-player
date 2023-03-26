@@ -7,6 +7,7 @@ interface SpectrogramPlayerProps {
     sxx: number[][]
     src: string
     annotations?: string[][]
+    annotations2?: string[][]
     specHeight: number
     navigator?: boolean
     navHeight?: number
@@ -26,6 +27,7 @@ const SpectrogramPlayer = (props: SpectrogramPlayerProps) => {
     const transparent = props.transparent ? true : false
     const dark = props.dark ? true : false
     const annotations = props.annotations ? props.annotations : null
+    const annotations2 = props.annotations2 ? props.annotations2 : null
     const annotationStrokeWidth = props.annotationStrokeWidth ? props.annotationStrokeWidth : undefined
     const annotationAspectRatio = props.annotationAspectRatio ? props.annotationAspectRatio : undefined
 
@@ -36,6 +38,7 @@ const SpectrogramPlayer = (props: SpectrogramPlayerProps) => {
                     <SpectrogramGraphics
                         sxx={sxx}
                         annotations={annotations}
+                        annotations2={annotations2}
                         specHeight={specHeight}
                         navHeight={navHeight}
                         colormap={colormap}

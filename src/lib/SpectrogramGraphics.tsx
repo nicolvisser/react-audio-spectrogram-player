@@ -21,6 +21,7 @@ function min(arr: number[][]) {
 interface SpectrogramGraphicsProps {
     sxx: number[][]
     annotations?: string[][] | null
+    annotations2?: string[][] | null
     specHeight: number
     navigator: boolean
     navHeight?: number
@@ -31,7 +32,7 @@ interface SpectrogramGraphicsProps {
 }
 
 function SpectrogramGraphics(props: SpectrogramGraphicsProps) {
-    const { sxx, annotations, specHeight, navigator, colormap, transparent } = props
+    const { sxx, annotations, annotations2, specHeight, navigator, colormap, transparent } = props
     const annotationStrokeWidth = props.annotationStrokeWidth ? props.annotationStrokeWidth : undefined
     const annotationAspectRatio = props.annotationAspectRatio ? props.annotationAspectRatio : undefined
     const navHeight = props.navHeight ? props.navHeight : 0
@@ -83,6 +84,9 @@ function SpectrogramGraphics(props: SpectrogramGraphicsProps) {
                     </SpectrogramViewer>
                     {annotations && (
                         <SpectrogramAnnotations annotations={annotations} strokeWidth={annotationStrokeWidth} aspectRatio={annotationAspectRatio} />
+                    )}
+                    {annotations2 && (
+                        <SpectrogramAnnotations annotations={annotations2} strokeWidth={annotationStrokeWidth} aspectRatio={annotationAspectRatio} />
                     )}
                     {navigator && (
                         <SpectrogramNavigator height={navHeight} >

@@ -50,6 +50,7 @@ function App() {
             src={src}
             sxx={sxx}
             annotations={annotations}
+            annotations2={annotations}
             specHeight={200}
             navHeight={50}
             navigator
