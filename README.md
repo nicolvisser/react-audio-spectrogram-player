@@ -72,8 +72,42 @@ return (
 |`transparent`|`boolean`|`false`|Use rgba values for spectrogram image.|
 |`dark`|`boolean`|`false`|Use dark mode theme.|
 
+### Annotations
+
+You can annotate intervals (e.g. words or phones) below the spectrogram.
+
+1. First create your annotations as a `(string | number)[][]` object.
+    - Column 1:   Start time in seconds
+    - Column 2:   End time in seconds
+    - Column 3:   Annotation as a string
+
+```js
+const word_intervals = [
+    [0.54, 0.84, "this"],
+    [0.84,  1.1, "little"],
+    [ 1.1,  1.4, "work"],
+    ...
+]
+```
+
+2. Pass the annotations object to the `annotations` prop.
+    
+    Note: You can use the `annotations2` prop for an additional set of annotations. For example if you want to display both words and phones.
+
+```jsx
+return (
+    <SpectrogramPlayer
+        src={src}
+        sxx={sxx}
+        specHeight={200}
+        navHeight={50}
+        annotations={word_intervals}
+        annotations2={phone_intervals}
+    />
+)
+```
+
 ## Future Updates
 
 - Calculate spectrogram with javascript when no `sxx` prop is supplied.
 - Better touch screen compatibility.
-- Develop Jupyter widget using this component.
