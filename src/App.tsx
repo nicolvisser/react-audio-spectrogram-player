@@ -21,7 +21,7 @@ function App() {
         navigator
         settings
         colormap="viridis"
-        //dark
+        dark
         annotationStrokeWidth={1}
         annotationAspectRatio={0.02}
       />

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { usePlayback } from "./PlaybackProvider";
 import { useZoom } from "./ZoomProvider";
 import { Fragment } from "react";
+import { useTheme } from "./ThemeProvider";
 
 const DEFAULT_ASPECT_RATIO = 0.03
 const DEFAULT_STROKE_WIDTH = 1
@@ -17,6 +18,9 @@ function SpectrogramAnnotations(props: SpectrogramContentProps) {
     const { annotations } = props
     const aspectRatio = props.aspectRatio ? props.aspectRatio : DEFAULT_ASPECT_RATIO
     const strokeWidth = props.strokeWidth ? props.strokeWidth : DEFAULT_STROKE_WIDTH
+
+    const { dark } = useTheme()
+    const annotationColor = dark ? "white" : "black"
 
     const { startTime: zoomStartTime, endTime: zoomEndTime } = useZoom()
 
@@ -35,9 +39,9 @@ function SpectrogramAnnotations(props: SpectrogramContentProps) {
                 const symbol = annotation[2]
                 return (
                     <Fragment key={annotationStartTime}>
-                        <line stroke="black" strokeWidth={svgStrokeWidth} x1={annotationStartTime} x2={annotationStartTime} y1={0} y2={svgHeight} />
-                        <text fill="black" x={annotationStartTime} y={textPosY} fontSize={fontSize}>&nbsp;{symbol}</text>
-                        <line stroke="black" strokeWidth={svgStrokeWidth} x1={annotationEndTime} x2={annotationEndTime} y1={0} y2={svgHeight} />
+                        <line stroke={annotationColor} strokeWidth={svgStrokeWidth} x1={annotationStartTime} x2={annotationStartTime} y1={0} y2={svgHeight} />
+                        <text fill={annotationColor} x={annotationStartTime} y={textPosY} fontSize={fontSize}>&nbsp;{symbol}</text>
+                        <line stroke={annotationColor} strokeWidth={svgStrokeWidth} x1={annotationEndTime} x2={annotationEndTime} y1={0} y2={svgHeight} />
                     </Fragment>
                 )
             })}
