@@ -9,7 +9,7 @@ interface SpectrogramPlayerProps {
     sxx: number[][]
     src: string
     annotations?: Annotations[]
-    specHeight: number
+    specHeight?: number
     navigator?: boolean
     navHeight?: number
     settings?: boolean
@@ -19,7 +19,9 @@ interface SpectrogramPlayerProps {
 }
 
 const SpectrogramPlayer = (props: SpectrogramPlayerProps) => {
-    const { sxx, src, specHeight, navHeight } = props
+    const { sxx, src } = props
+    const specHeight = props.specHeight ? props.specHeight : 200
+    const navHeight = props.navHeight ? props.navHeight : 50
     const navigator = props.navigator ? true : false
     const settings = props.settings ? true : false
     const colormap = props.colormap ? props.colormap : 'viridis'

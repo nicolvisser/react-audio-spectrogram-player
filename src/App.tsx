@@ -29,9 +29,6 @@ function App() {
       height: 30,
       strokeWidth: 0.5,
     },
-    {
-      data: wordIntervals,
-    },
   ]
 
   return (
@@ -40,9 +37,9 @@ function App() {
         src={src}
         sxx={sxx}
         annotations={annotations}
-        specHeight={200}
-        navHeight={50}
+        specHeight={300}
         navigator
+        navHeight={80}
         settings
         colormap="viridis"
         dark
