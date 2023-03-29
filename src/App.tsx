@@ -7,23 +7,45 @@ import sxx from "./assets/librispeech/sxx/19-198-0001.json";
 import wordIntervals from "./assets/librispeech/word_intervals/19-198-0001.json";
 import phoneIntervals from "./assets/librispeech/phone_intervals/19-198-0001.json";
 
+// import src from "./assets/buckeye/wav/s0101a.wav";
+// import { sxx } from "./assets/buckeye/sxx/s0101a.js";
+// import wordIntervals from "./assets/buckeye/word_intervals/s0101a.json";
+// import phoneIntervals from "./assets/buckeye/phone_intervals/s0101a.json";
+
+import { Annotations } from './lib/Annotation';
+
 function App() {
+
+  const annotations: Annotations[]  = [
+    {
+      title: "Word intervals:",
+      data: wordIntervals,
+      height: 30,
+      strokeWidth: 0.5,
+    },
+    {
+      title: "Phone intervals:",
+      data: phoneIntervals,
+      height: 30,
+      strokeWidth: 0.5,
+    },
+    {
+      data: wordIntervals,
+    },
+  ]
 
   return (
     <div style={{ maxWidth: '100vw', marginTop: 40, marginLeft: 'auto', marginRight: 'auto', width: '90vw' }}>
       <SpectrogramPlayer
         src={src}
         sxx={sxx}
-        annotations={wordIntervals}
-        annotations2={phoneIntervals}
+        annotations={annotations}
         specHeight={200}
         navHeight={50}
         navigator
         settings
         colormap="viridis"
         dark
-        annotationStrokeWidth={1}
-        annotationAspectRatio={0.02}
       />
     </div >
   )

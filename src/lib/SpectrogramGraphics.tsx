@@ -1,10 +1,11 @@
-import { useRef, useEffect, useState } from 'react'
+import { useRef, useEffect, useState, Children } from 'react'
 import createColorMap from 'colormap';
 import SpectrogramViewer from './SpectrogramViewer';
 import SpectrogramNavigator from './SpectrogramNavigator';
 import SpectrogramContent from './SpectrogramContent';
 import ZoomProvider from './ZoomProvider';
 import SpectrogramAnnotations from './SpectogramAnnotations'
+import { Annotations } from './Annotation';
 
 function max(arr: number[][]) {
     var maxRow = arr.map(function (row) { return Math.max.apply(Math, row); });
@@ -20,21 +21,16 @@ function min(arr: number[][]) {
 
 interface SpectrogramGraphicsProps {
     sxx: number[][]
-    annotations?: (string | number)[][] | null
-    annotations2?: (string | number)[][] | null
+    annotations?: Annotations[]
     specHeight: number
     navigator: boolean
     navHeight?: number
     colormap: string
     transparent: boolean
-    annotationStrokeWidth?: number
-    annotationAspectRatio?: number
 }
 
 function SpectrogramGraphics(props: SpectrogramGraphicsProps) {
-    const { sxx, annotations, annotations2, specHeight, navigator, colormap, transparent } = props
-    const annotationStrokeWidth = props.annotationStrokeWidth ? props.annotationStrokeWidth : undefined
-    const annotationAspectRatio = props.annotationAspectRatio ? props.annotationAspectRatio : undefined
+    const { sxx, annotations, specHeight, navigator, colormap, transparent } = props
     const navHeight = props.navHeight ? props.navHeight : 0
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const [dataURL, setDataURL] = useState<string>("")
@@ -82,11 +78,8 @@ function SpectrogramGraphics(props: SpectrogramGraphicsProps) {
                     <SpectrogramViewer height={specHeight}>
                         {spectrogramContent}
                     </SpectrogramViewer>
-                    {annotations && (
-                        <SpectrogramAnnotations annotations={annotations} strokeWidth={annotationStrokeWidth} aspectRatio={annotationAspectRatio} />
-                    )}
-                    {annotations2 && (
-                        <SpectrogramAnnotations annotations={annotations2} strokeWidth={annotationStrokeWidth} aspectRatio={annotationAspectRatio} />
+                    {Children.toArray(
+                        annotations?.map(({ title, data, height, strokeWidth }) => (<SpectrogramAnnotations title={title} height={height} data={data} strokeWidth={strokeWidth} />))
                     )}
                     {navigator && (
                         <SpectrogramNavigator height={navHeight} >

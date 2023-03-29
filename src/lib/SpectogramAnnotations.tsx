@@ -1,51 +1,62 @@
-import { useEffect, useRef, useState } from "react";
-import { usePlayback } from "./PlaybackProvider";
+import { useRef, useState, useLayoutEffect } from "react";
 import { useZoom } from "./ZoomProvider";
 import { Fragment } from "react";
 import { useTheme } from "./ThemeProvider";
+import { Annotations } from "./Annotation";
 
-const DEFAULT_ASPECT_RATIO = 0.03
+const DEFAULT_HEIGHT = 30
 const DEFAULT_STROKE_WIDTH = 1
 
-
-interface SpectrogramContentProps {
-    annotations: (string | number)[][]
-    aspectRatio?: number | undefined
-    strokeWidth?: number | undefined
-}
-
-function SpectrogramAnnotations(props: SpectrogramContentProps) {
-    const { annotations } = props
-    const aspectRatio = props.aspectRatio ? props.aspectRatio : DEFAULT_ASPECT_RATIO
+function SpectrogramAnnotations(props: Annotations) {
+    const { title, data } = props
+    const height = props.height ? props.height : DEFAULT_HEIGHT
     const strokeWidth = props.strokeWidth ? props.strokeWidth : DEFAULT_STROKE_WIDTH
+
+    const svgRef = useRef<SVGSVGElement>(null);
+    const [width, setWidth] = useState(0);
+    useLayoutEffect(() => {
+        function handleWindowResize() {
+            if (svgRef.current) {
+                setWidth(svgRef.current.clientWidth);
+            }
+        }
+        handleWindowResize()
+        window.addEventListener('resize', handleWindowResize);
+      }, []);
+
+
+    const { startTime: zoomStartTime, endTime: zoomEndTime } = useZoom()
+    const displayRange = (zoomEndTime - zoomStartTime)
+
+    const svgCanvasHeight = width !== 0 ? displayRange / width * height : 0
 
     const { dark } = useTheme()
     const annotationColor = dark ? "white" : "black"
 
-    const { startTime: zoomStartTime, endTime: zoomEndTime } = useZoom()
-
-    const displayRange = (zoomEndTime - zoomStartTime)
-    const svgHeight = aspectRatio * displayRange
+    const svgFontSize = svgCanvasHeight * 0.67
     const svgStrokeWidth = 0.001 * strokeWidth * displayRange
-    const fontSize = 0.6 * aspectRatio * displayRange
-    const textPosY = svgHeight - fontSize / 2
+    
+    const textPosY = svgCanvasHeight * 0.67
 
     return (
-        <svg width="100%" viewBox={`${zoomStartTime},0,${displayRange},${svgHeight}`} preserveAspectRatio="none">
-            {annotations.map((annotation) => {
-                const annotationStartTime = Number(annotation[0])
-                const annotationEndTime = Number(annotation[1])
-                const annotationDuration = annotationEndTime - annotationStartTime
-                const symbol = annotation[2]
-                return (
-                    <Fragment key={annotationStartTime}>
-                        <line stroke={annotationColor} strokeWidth={svgStrokeWidth} x1={annotationStartTime} x2={annotationStartTime} y1={0} y2={svgHeight} />
-                        <text fill={annotationColor} x={annotationStartTime} y={textPosY} fontSize={fontSize}>&nbsp;{symbol}</text>
-                        <line stroke={annotationColor} strokeWidth={svgStrokeWidth} x1={annotationEndTime} x2={annotationEndTime} y1={0} y2={svgHeight} />
-                    </Fragment>
-                )
-            })}
-        </svg >
+        <Fragment>
+            <span style={{font: 'monospace', color: annotationColor}}>  {title} </span>
+            <svg ref={svgRef} width="100%" height={height} viewBox={`${zoomStartTime},0,${displayRange},${svgCanvasHeight}`} preserveAspectRatio="none">
+                {data.map((annotation) => {
+                    const start = Number(annotation[0])
+                    const stop = Number(annotation[1])
+                    const text = String(annotation[2])
+                    return (
+                        <Fragment key={start}>
+                            <line stroke={annotationColor} strokeWidth={svgStrokeWidth} x1={start} x2={start} y1={0} y2={svgCanvasHeight} />
+                            <text fill={annotationColor} x={start} y={textPosY} fontSize={svgFontSize}>&nbsp;{text}</text>
+                            <line stroke={annotationColor} strokeWidth={svgStrokeWidth} x1={stop} x2={stop} y1={0} y2={svgCanvasHeight} />
+                        </Fragment>
+                    )
+                })}
+            </svg >
+        </Fragment>
+
     )
 }
 

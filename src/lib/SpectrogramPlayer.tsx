@@ -2,12 +2,13 @@ import SpectrogramGraphics from './SpectrogramGraphics';
 import PlaybackProvider from "./PlaybackProvider";
 import ThemeProvider from './ThemeProvider';
 import './SpectrogramPlayer.css'
+import { Annotations } from './Annotation';
+
 
 interface SpectrogramPlayerProps {
     sxx: number[][]
     src: string
-    annotations?: (string | number)[][]
-    annotations2?: (string | number)[][]
+    annotations?: Annotations[]
     specHeight: number
     navigator?: boolean
     navHeight?: number
@@ -15,8 +16,6 @@ interface SpectrogramPlayerProps {
     colormap?: string
     transparent?: boolean
     dark?: boolean
-    annotationStrokeWidth?: number
-    annotationAspectRatio?: number
 }
 
 const SpectrogramPlayer = (props: SpectrogramPlayerProps) => {
@@ -26,10 +25,7 @@ const SpectrogramPlayer = (props: SpectrogramPlayerProps) => {
     const colormap = props.colormap ? props.colormap : 'viridis'
     const transparent = props.transparent ? true : false
     const dark = props.dark ? true : false
-    const annotations = props.annotations ? props.annotations : null
-    const annotations2 = props.annotations2 ? props.annotations2 : null
-    const annotationStrokeWidth = props.annotationStrokeWidth ? props.annotationStrokeWidth : undefined
-    const annotationAspectRatio = props.annotationAspectRatio ? props.annotationAspectRatio : undefined
+    const annotations = props.annotations ? props.annotations : []
 
     return (
         <div style={{ width: '100%' }}>
@@ -38,14 +34,11 @@ const SpectrogramPlayer = (props: SpectrogramPlayerProps) => {
                     <SpectrogramGraphics
                         sxx={sxx}
                         annotations={annotations}
-                        annotations2={annotations2}
                         specHeight={specHeight}
                         navHeight={navHeight}
                         colormap={colormap}
                         transparent={transparent}
                         navigator={navigator}
-                        annotationStrokeWidth={annotationStrokeWidth}
-                        annotationAspectRatio={annotationAspectRatio}
                     />
                 </PlaybackProvider>
             </ThemeProvider>
