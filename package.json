@@ -1,6 +1,6 @@
 {
   "name": "react-audio-spectrogram-player",
-  "version": "0.0.7",
+  "version": "1.0.0",
   "description": "An audioplayer written in React that shows a spectrogram along with the audio.",
   "license": "MIT",
   "author": "nicolvisser",
