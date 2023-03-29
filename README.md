@@ -10,7 +10,7 @@ If you use Python, there is also a jupyter widged based on this component. You c
 
 See the [demo](https://react-audio-spectrogram-player.netlify.app/).
 
-![preview](./preview.png)
+![preview](./preview_with_annotations.png)
 
 ## Installation
 
