@@ -20,13 +20,13 @@ function App() {
     {
       title: "Word intervals:",
       data: wordIntervals,
-      height: 30,
-      strokeWidth: 0.5,
+      height: 20,
+      strokeWidth: 1,
     },
     {
       title: "Phone intervals:",
       data: phoneIntervals,
-      height: 30,
+      height: 20,
       strokeWidth: 0.5,
     },
   ]

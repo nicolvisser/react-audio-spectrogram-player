@@ -4,7 +4,7 @@ import { Fragment } from "react";
 import { useTheme } from "./ThemeProvider";
 import { Annotations } from "./Annotation";
 
-const DEFAULT_HEIGHT = 30
+const DEFAULT_HEIGHT = 20
 const DEFAULT_STROKE_WIDTH = 1
 
 function SpectrogramAnnotations(props: Annotations) {
@@ -22,7 +22,8 @@ function SpectrogramAnnotations(props: Annotations) {
         }
         handleWindowResize()
         window.addEventListener('resize', handleWindowResize);
-      }, []);
+        setInterval(handleWindowResize, 500)
+    }, []);
 
 
     const { startTime: zoomStartTime, endTime: zoomEndTime } = useZoom()
@@ -35,12 +36,12 @@ function SpectrogramAnnotations(props: Annotations) {
 
     const svgFontSize = svgCanvasHeight * 0.67
     const svgStrokeWidth = 0.001 * strokeWidth * displayRange
-    
+
     const textPosY = svgCanvasHeight * 0.67
 
     return (
         <Fragment>
-            <span style={{font: 'monospace', color: annotationColor}}>  {title} </span>
+            <div style={{textAlign: 'left', fontFamily: 'monospace', color: annotationColor }}>{title}</div>
             <svg ref={svgRef} width="100%" height={height} viewBox={`${zoomStartTime},0,${displayRange},${svgCanvasHeight}`} preserveAspectRatio="none">
                 {data.map((annotation) => {
                     const start = Number(annotation[0])
@@ -49,7 +50,7 @@ function SpectrogramAnnotations(props: Annotations) {
                     return (
                         <Fragment key={start}>
                             <line stroke={annotationColor} strokeWidth={svgStrokeWidth} x1={start} x2={start} y1={0} y2={svgCanvasHeight} />
-                            <text fill={annotationColor} x={start} y={textPosY} fontSize={svgFontSize}>&nbsp;{text}</text>
+                            <text fill={annotationColor} x={start} y={textPosY} fontSize={svgFontSize} fontFamily='monospace'>&nbsp;{text}</text>
                             <line stroke={annotationColor} strokeWidth={svgStrokeWidth} x1={stop} x2={stop} y1={0} y2={svgCanvasHeight} />
                         </Fragment>
                     )
