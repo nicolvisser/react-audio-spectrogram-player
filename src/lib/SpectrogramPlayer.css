@@ -75,7 +75,7 @@ button.dark:hover {
 }
 
 .slidervalue {
-  padding: 5px
+  padding: 5px;
 }
 
 .slider {
@@ -85,8 +85,8 @@ button.dark:hover {
   height: 25px;
   outline: none;
   opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
 }
 
 .slider:hover {

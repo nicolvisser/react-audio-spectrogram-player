@@ -45,7 +45,8 @@
     ]
   },
   "dependencies": {
-    "colormap": "^2.3.2"    
+    "colormap": "^2.3.2",
+    "rust-melspec-wasm": "^0.1.0-alpha.1"
   },
   "devDependencies": {
     "@types/colormap": "^2.3.1",
@@ -53,12 +54,14 @@
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react-swc": "^3.0.0",
+    "prettier": "^3.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "typescript": "^4.9.3",
     "vite": "^4.2.0",
     "vite-plugin-css-injected-by-js": "^3.1.0",
-    "vite-plugin-dts": "^2.1.0"
+    "vite-plugin-dts": "^2.1.0",
+    "vite-plugin-wasm": "^3.4.1"
   },
   "repository": "github:nicolvisser/react-audio-spectrogram-player",
   "bugs": {
