@@ -4,6 +4,8 @@ An audioplayer written in React that shows a spectrogram along with the audio. T
 
 Note: At the moment, you still need to compute the spectrogram yourself and pass it to the component via the `src` prop.
 
+⚠️ UPDATE 25/02/17: I am currently working on code to compute the spectrogram with web assembly. This way, you do not need to precompute the spectrogram value. So watch this space. I will release a v2.0.0alpha in the next week.
+
 If you use Python, there is also a jupyter widged based on this component. You can find it [here](https://pypi.org/project/speechwidgets/).
 
 ## Preview
