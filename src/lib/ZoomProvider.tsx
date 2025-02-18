@@ -46,13 +46,15 @@ function ZoomProvider(props: ZoomProviderProps) {
   const { children, startTimeInitial, endTimeInitial } = props;
   const { duration, currentTime, mode, pause, setCurrentTime } = usePlayback();
   const [startTime, setStartTime] = useState(startTimeInitial ?? 0);
-  const [endTime, setEndTime] = useState(endTimeInitial ?? duration);
+  const [endTime, setEndTime] = useState(endTimeInitial ?? duration ?? 1);
 
   useEffect(() => {
-    setStartTime(startTimeInitial ?? 0);
-    setEndTime(endTimeInitial ?? duration);
-    setCurrentTime(startTimeInitial ?? 0);
-  }, [startTimeInitial, endTimeInitial]);
+    if (duration !== null) {
+      setStartTime(startTimeInitial ?? 0);
+      setEndTime(endTimeInitial ?? duration);
+      setCurrentTime(startTimeInitial ?? 0);
+    }
+  }, [duration, startTimeInitial, endTimeInitial]);
 
   const zoomedDuration = endTime - startTime;
 
@@ -111,6 +113,7 @@ function ZoomProvider(props: ZoomProviderProps) {
   }, [currentTime, mode]);
 
   const zoomIn = () => {
+    if (duration === null) return;
     const newStartTime = Math.max(0, startTime + 0.2 * zoomedDuration);
     const newEndTime = Math.min(duration, endTime - 0.2 * zoomedDuration);
     setStartTime(newStartTime);
@@ -119,6 +122,7 @@ function ZoomProvider(props: ZoomProviderProps) {
   };
 
   const zoomOut = () => {
+    if (duration === null) return;
     const newStartTime = Math.max(0, startTime - (1 / 3) * zoomedDuration);
     const newEndTime = Math.min(duration, endTime + (1 / 3) * zoomedDuration);
     setStartTime(newStartTime);
@@ -127,6 +131,7 @@ function ZoomProvider(props: ZoomProviderProps) {
   };
 
   const nextPage = () => {
+    if (duration === null) return;
     const newEndTime = Math.min(duration, endTime + zoomedDuration);
     const newStartTime = Math.max(0, newEndTime - zoomedDuration);
     setStartTime(newStartTime);
@@ -134,13 +139,14 @@ function ZoomProvider(props: ZoomProviderProps) {
   };
 
   const previousPage = () => {
+    if (duration === null) return;
     const newStartTime = Math.max(0, startTime - zoomedDuration);
     const newEndTime = Math.min(duration, newStartTime + zoomedDuration);
     setStartTime(newStartTime);
     setEndTime(newEndTime);
   };
 
-  const isZoomed = startTime > 0 || endTime < duration;
+  const isZoomed = duration !== null && (startTime > 0 || endTime < duration);
 
   return (
     <ZoomContext.Provider

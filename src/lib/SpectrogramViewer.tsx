@@ -15,7 +15,7 @@ function SpectrogramViewer(props: SpectrogramViewerProps) {
 
   const onClick = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     const boundingClientRect = svgRef.current?.getBoundingClientRect();
-    if (boundingClientRect) {
+    if (boundingClientRect && duration) {
       const { left, right } = boundingClientRect;
       let newTime =
         startTime +
@@ -30,7 +30,9 @@ function SpectrogramViewer(props: SpectrogramViewerProps) {
     }
   };
 
-  return (
+  const placeholder_svg = <svg width="100%" height={height} />;
+
+  return duration ? (
     <svg
       ref={svgRef}
       width="100%"
@@ -42,6 +44,8 @@ function SpectrogramViewer(props: SpectrogramViewerProps) {
     >
       {children}
     </svg>
+  ) : (
+    placeholder_svg
   );
 }
 

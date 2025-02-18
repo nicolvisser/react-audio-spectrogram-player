@@ -49,8 +49,8 @@ function App() {
         annotations={annotations}
         navigator={true}
         settings={true}
-        startTimeInitial={2}
-        endTimeInitial={4}
+        //startTimeInitial={2}
+        //endTimeInitial={4}
         playbackSpeedInitial={1.0}
         playheadModeInitial="loop"
         specHeight={300}

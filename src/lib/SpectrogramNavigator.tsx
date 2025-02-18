@@ -34,10 +34,10 @@ function SpectrogramNavigator(props: SpectrogramNavigatorProps) {
   const draggingToPan = isZoomed && dragStart;
 
   const getPointerCoordinate = (
-    e: React.MouseEvent<SVGSVGElement, MouseEvent>
+    e: React.MouseEvent<SVGSVGElement, MouseEvent>,
   ) => {
     const boundingClientRect = svgRef.current?.getBoundingClientRect();
-    if (boundingClientRect) {
+    if (boundingClientRect && duration) {
       const { left, right } = boundingClientRect;
       let newTime = (duration * (e.clientX - left)) / (right - left);
       return newTime;
@@ -53,10 +53,10 @@ function SpectrogramNavigator(props: SpectrogramNavigatorProps) {
     const newDragEnd = getPointerCoordinate(e);
     setDragEnd(newDragEnd);
     if (newDragEnd) {
-      if (draggingToPan) {
+      if (draggingToPan && duration) {
         const newCenterTime = Math.min(
           Math.max(zoomedDuration / 2, newDragEnd),
-          duration - zoomedDuration / 2
+          duration - zoomedDuration / 2,
         );
         setCenterTime(newCenterTime);
         setCurrentTime(newCenterTime - zoomedDuration / 2);
@@ -65,7 +65,7 @@ function SpectrogramNavigator(props: SpectrogramNavigatorProps) {
   };
 
   const onPointerUp = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
-    if (draggingToZoom) {
+    if (draggingToZoom && duration) {
       if (dragEnd - dragStart >= MINIMUM_ZOOM_WINDOW_DURATION) {
         setStartTime(dragStart);
         setEndTime(dragEnd);
@@ -80,47 +80,53 @@ function SpectrogramNavigator(props: SpectrogramNavigatorProps) {
     setDragEnd(null);
   };
 
+  const placeholder_svg = <svg width="100%" height={height} />;
+
   return (
     <div style={{ display: "flex", flexDirection: "row", gap: 5 }}>
       <button className={theme} onClick={zoomOut}>
         Zoom Out
       </button>
-      <svg
-        ref={svgRef}
-        width="100%"
-        height={height}
-        viewBox={`0,0,${duration},100`}
-        cursor={isZoomed ? "grabbing" : "zoom-in"}
-        preserveAspectRatio="none"
-        onPointerDown={onPointerDown}
-        onPointerUp={onPointerUp}
-        onPointerMove={onPointerMove}
-      >
-        {children}
-        <rect
-          x={0}
-          width={startTime}
-          y="0"
-          height="100"
-          style={{ fill: "white", opacity: 0.5 }}
-        />
-        <rect
-          x={endTime}
-          width={duration - endTime}
-          y="0"
-          height="100"
-          style={{ fill: "white", opacity: 0.5 }}
-        />
-        {draggingToZoom && dragEnd > dragStart && (
+      {duration ? (
+        <svg
+          ref={svgRef}
+          width="100%"
+          height={height}
+          viewBox={`0,0,${duration},100`}
+          cursor={isZoomed ? "grabbing" : "zoom-in"}
+          preserveAspectRatio="none"
+          onPointerDown={onPointerDown}
+          onPointerUp={onPointerUp}
+          onPointerMove={onPointerMove}
+        >
+          {children}
           <rect
-            x={dragStart}
-            width={dragEnd - dragStart}
+            x={0}
+            width={startTime}
             y="0"
             height="100"
-            style={{ fill: "red", opacity: 0.5 }}
+            style={{ fill: "white", opacity: 0.5 }}
           />
-        )}
-      </svg>
+          <rect
+            x={endTime}
+            width={duration - endTime}
+            y="0"
+            height="100"
+            style={{ fill: "white", opacity: 0.5 }}
+          />
+          {draggingToZoom && dragEnd > dragStart && (
+            <rect
+              x={dragStart}
+              width={dragEnd - dragStart}
+              y="0"
+              height="100"
+              style={{ fill: "red", opacity: 0.5 }}
+            />
+          )}
+        </svg>
+      ) : (
+        placeholder_svg
+      )}
       <button
         className={theme}
         style={{ fontFamily: "monospace" }}

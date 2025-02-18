@@ -10,12 +10,12 @@ import {
 import { useTheme } from "./ThemeProvider";
 
 export type PlaybackContextType = {
-  duration: number;
+  duration: number | null;
   currentTime: number;
   playbackRate: number;
   mode: string;
   sampleRate: number;
-  setDuration: Dispatch<SetStateAction<number>>;
+  setDuration: Dispatch<SetStateAction<number | null>>;
   setCurrentTime: (newTime: number) => void;
   setPlaybackRate: (newTime: number) => void;
   pause: () => void;
@@ -23,7 +23,7 @@ export type PlaybackContextType = {
 };
 
 export const PlaybackContext = createContext<PlaybackContextType>({
-  duration: 999,
+  duration: null,
   currentTime: 0,
   playbackRate: 1.0,
   mode: "page",
@@ -61,7 +61,7 @@ function PlaybackProvider(props: PlaybackProviderProps) {
     playheadModeInitial = "page",
   } = props;
   const settings = props.settings ? true : false;
-  const [duration, setDuration] = useState(999);
+  const [duration, setDuration] = useState<number | null>(null);
   const [currentTime, _setCurrentTime] = useState(currentTimeInitial);
   const [playbackRate, _setPlaybackRate] = useState(playbackSpeedInitial);
   const [mode, setMode] = useState<string>(playheadModeInitial);
@@ -81,6 +81,11 @@ function PlaybackProvider(props: PlaybackProviderProps) {
       if (audioRef.current.duration) {
         setDuration(audioRef.current.duration);
       }
+
+      if (audioRef.current.readyState >= 1) {
+        setDuration(audioRef.current.duration);
+      }
+
       audioRef.current.playbackRate = playbackSpeedInitial;
 
       if (intervalRef.current) {

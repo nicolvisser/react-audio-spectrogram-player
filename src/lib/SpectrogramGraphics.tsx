@@ -103,8 +103,8 @@ function SpectrogramGraphics(props: SpectrogramGraphicsProps) {
       // for backwards compatibility, where user could specify sxx as a number[][] array
       setSpec(
         sxx[0].map(
-          (_, colIndex) => new Float32Array(sxx.map((row) => row[colIndex]))
-        )
+          (_, colIndex) => new Float32Array(sxx.map((row) => row[colIndex])),
+        ),
       );
       return;
     }
@@ -119,7 +119,7 @@ function SpectrogramGraphics(props: SpectrogramGraphicsProps) {
         f_min,
         f_max,
         n_mels,
-        top_db
+        top_db,
       );
 
       setSpec(melSpec);
@@ -197,7 +197,7 @@ function SpectrogramGraphics(props: SpectrogramGraphicsProps) {
                 data={data}
                 strokeWidth={strokeWidth}
               />
-            ))
+            )),
           )}
           {navigator && (
             <SpectrogramNavigator height={navHeight}>

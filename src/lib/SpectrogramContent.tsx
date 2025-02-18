@@ -13,6 +13,10 @@ function SpectrogramContent(props: SpectrogramContentProps) {
   const { duration, currentTime } = usePlayback();
   const { zoomedDuration } = useZoom();
 
+  if (!duration) {
+    return null;
+  }
+
   return (
     <>
       <image
