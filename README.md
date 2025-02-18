@@ -61,36 +61,45 @@ return (
     n_mels={128}
     top_db={80}
     annotations={annotations}
-    navigator={true}
-    settings={true}
+    startTimeInitial={2.0}
+    endTimeInitial={4.0}
+    playbackSpeedInitial={0.5}
+    playheadModeInitial="loop"
+    navigator
+    settings
     specHeight={300}
     navHeight={80}
-    colormap="viridis"
-    transparent={false}
-    dark={true}
+    colormap="inferno"
+    transparent
+    dark
   />
 );
 ```
 
-| Prop          | Type         | Default        | Description                                                                              |
-| ------------- | ------------ | -------------- | ---------------------------------------------------------------------------------------- |
-| `src`         | `string`     | required       | Path to the wav audio file.                                                              |
-| `sxx`         | `number[][]` | undefined      | 2D array with spectrogram values. Will override the spectrogram computed from the audio. |
-| `sampleRate`  | `number`     | `16000`        | Sample rate of the audio.                                                                |
-| `n_fft`       | `number`     | `1024`         | Number of FFT bins.                                                                      |
-| `win_length`  | `number`     | `400`          | Window length.                                                                           |
-| `hop_length`  | `number`     | `160`          | Hop length.                                                                              |
-| `f_min`       | `number`     | `0`            | Minimum frequenc corresponding to the first mel band.                                    |
-| `f_max`       | `number`     | `sampleRate/2` | Maximum frequency corresponding to the last mel band.                                    |
-| `n_mels`      | `number`     | `128`          | Number of mel bands.                                                                     |
-| `top_db`      | `number`     | `80`           | Maximum decibel value.                                                                   |
-| `specHeight`  | `number`     | `200`          | Height of the main spectrogram.                                                          |
-| `navigator`   | `boolean`    | `false`        | Allow user to zoom in with the navigator UI.                                             |
-| `navHeight`   | `number`     | `50`           | Height of the navigator UI.                                                              |
-| `settings`    | `boolean`    | `false`        | Allow user to change some playback behaviour.                                            |
-| `colormap`    | `string`     | `'viridis'`    | The [colormap](https://www.npmjs.com/package/colormap) to use.                           |
-| `transparent` | `boolean`    | `false`        | Use rgba values for spectrogram image.                                                   |
-| `dark`        | `boolean`    | `false`        | Use dark mode theme.                                                                     |
+| Prop          | Type            | Default        | Description                                                                              |
+| ------------- | --------------- | -------------- | ---------------------------------------------------------------------------------------- |
+| `src`         | `string`        | required       | Path to the wav audio file.                                                              |
+| `sxx`         | `number[][]`    | undefined      | 2D array with spectrogram values. Will override the spectrogram computed from the audio. |
+| `sampleRate`  | `number`        | `16000`        | Sample rate used when loading audio.                                                     |
+| `n_fft`       | `number`        | `1024`         | Number of FFT bins.                                                                      |
+| `win_length`  | `number`        | `400`          | STFT Window length.                                                                      |
+| `hop_length`  | `number`        | `160`          | STFT Hop length.                                                                         |
+| `f_min`       | `number`        | `0`            | Minimum frequency corresponding to the first mel band.                                   |
+| `f_max`       | `number`        | `sampleRate/2` | Maximum frequency corresponding to the last mel band.                                    |
+| `n_mels`      | `number`        | `128`          | Number of mel bands.                                                                     |
+| `top_db`      | `number`        | `80`           | Maximum decibel value.                                                                   |
+| `annotations` | `Annotations[]` | `[]`           | List of annotations to display (see [Annotations](#annotations) section).               |
+| `navigator`   | `boolean`       | `false`        | Allow user to zoom in with the navigator UI.                                             |
+| `settings`    | `boolean`       | `false`        | Allow user to change some playback behaviour.                                            |
+| `startTimeInitial` | `number`        | `undefined`    | Zoom using this start time on load.                                                   |
+| `endTimeInitial`  | `number`        | `undefined`    | Zoom using this end time on load.                                                     |
+| `playbackSpeedInitial` | `number`        | `1.0`          | Initial playback speed.                                                                 |
+| `playheadModeInitial` | `string`        | `'page'`       | Initial playhead mode.                                                                  |
+| `specHeight`  | `number`        | `200`          | Height of the main spectrogram.                                                          |
+| `navHeight`   | `number`        | `50`           | Height of the navigator UI.                                                              |
+| `colormap`    | `string`        | `'viridis'`    | The [colormap](https://www.npmjs.com/package/colormap) to use.                           |
+| `transparent` | `boolean`       | `false`        | Use rgba values for spectrogram image.                                                   |
+| `dark`        | `boolean`       | `false`        | Use dark mode theme.                                                                     |
 
 ### Annotations
 
@@ -156,5 +165,4 @@ You can annotate intervals (such as words or phones) below the spectrogram.
 
 ## Future Updates
 
-- Start values for settings. E.g., start with 0.5x speed on load.
 - Better touch screen compatibility.
