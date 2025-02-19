@@ -1,10 +1,10 @@
 # react-audio-spectrogram-player
 
-An audioplayer written in React that computes and shows a mel scale spectrogram along with the audio. The playhead on the spectrogram is synchronized with the audioplayer. You can zoom in on the spectrogram and slow down the audio. It acts almost as a microscope for audio.
+An audio player written in React computes and shows a mel scale spectrogram along with the audio. The playhead on the spectrogram is synchronized with the audio player. You can zoom in on the spectrogram and slow down the audio. It acts almost as a microscope for audio.
 
 The spectrogram is computed using web assembly. The Rust code for this can be found [here](https://github.com/nicolvisser/rust-melspec-wasm).
 
-If you use Python, there is also a jupyter widged based on this component. You can find it [here](https://pypi.org/project/speechwidgets/).
+If you use Python, there is also a jupyter widget based on this component. You can find it [here](https://pypi.org/project/speechwidgets/).
 
 ## Preview
 
@@ -14,7 +14,7 @@ See the [demo](https://react-audio-spectrogram-player.netlify.app/).
 
 ## Installation
 
-```shell
+```sh
 npm i react-audio-spectrogram-player
 ```
 
@@ -35,7 +35,7 @@ const App = () => {
 
 ### Customization
 
-To override the spectrogram values, (supoose you precomputed the spectrogram values), you can use the `sxx` prop.
+To override the spectrogram values (suppose you precomputed the spectrogram values), you can use the `sxx` prop.
 
 ```jsx
 return (
@@ -79,7 +79,7 @@ return (
 | Prop          | Type            | Default        | Description                                                                              |
 | ------------- | --------------- | -------------- | ---------------------------------------------------------------------------------------- |
 | `src`         | `string`        | required       | Path to the wav audio file.                                                              |
-| `sxx`         | `number[][]`    | undefined      | 2D array with spectrogram values. Will override the spectrogram computed from the audio. |
+| `sxx`         | `number[][]`    | undefined      | 2D array with spectrogram values. It will override the spectrogram computed from the audio. |
 | `sampleRate`  | `number`        | `16000`        | Sample rate used when loading audio.                                                     |
 | `n_fft`       | `number`        | `1024`         | Number of FFT bins.                                                                      |
 | `win_length`  | `number`        | `400`          | STFT Window length.                                                                      |
